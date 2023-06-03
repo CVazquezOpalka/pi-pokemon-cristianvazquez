@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const {
-  getPokemon,
+  getPokemonById,
   getPokemons,
   createPokemons,
 
@@ -9,7 +9,8 @@ const {
 const router = Router();
 
 router.get("/", getPokemons);
-router.get("/:id", getPokemon);
+router.get("/:id", getPokemonById);
+
 router.post("/", createPokemons);
 
 module.exports = router;
