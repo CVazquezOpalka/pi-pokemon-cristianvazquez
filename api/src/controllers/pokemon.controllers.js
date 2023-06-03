@@ -26,6 +26,12 @@ const getPokemonById = async (req, res) => {
   }
 };
 
+const getPokemonByName = async (req, res) => {
+  
+  res.send("recibiendo info por query");
+};
+
+
 const createPokemons = async (req, res) => {
   let { name, image, vida, fuerza, defensa, velocidad, altura, peso, tipos } =
     req.body;
@@ -74,6 +80,7 @@ const createPokemons = async (req, res) => {
 
 module.exports = {
   getPokemonById,
+  getPokemonByName,
   getPokemons,
   createPokemons,
 };
