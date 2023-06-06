@@ -1,37 +1,23 @@
 import React from "react";
-import { useEffect } from "react";
-import { connect } from "react-redux";
-import { getPokemons } from "./redux/actions";
+import {
+  LandingPage,
+  HomePage,
+  CreatePage,
+  DetailPage,
+  Favorites,
+} from "./pages/index";
+import { Routes, Route } from "react-router-dom";
 
-function App({ pokemon }) {
-  useEffect(() => {
-    getPokemons();
-  }, []);
+function App() {
   return (
-    <div className="App">
-      <h1>vamos a hacer un request</h1>
-      {pokemon.length ? (
-        <div>
-         { pokemon.map(e => (<h1 key={e.id}>{e.name}</h1>
-          ))}
-        </div>
-      ) : (
-        <h2>no</h2>
-      )}
-    </div>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/createPokemon" element={<CreatePage />} />
+      <Route path="/pokemon/:id" element={<DetailPage />} />
+      <Route path="/favorites" element={<Favorites />} />
+    </Routes>
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getPokemons: dispatch(getPokemons()),
-  };
-};
-
-const mapStateToProps = (state) => {
-  return {
-    pokemon: state.pokemons,
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
