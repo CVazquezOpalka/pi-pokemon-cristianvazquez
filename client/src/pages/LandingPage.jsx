@@ -16,12 +16,7 @@ export const LandingPage = () => {
     <Container>
       <div className="container-pokeball">
         <div className="title">
-          <img
-           
-            src={TitleBanner}
-            alt=""
-            className="title"
-          />
+          <img src={TitleBanner} alt="" className="title" />
         </div>
         <div className="btn">
           <button
@@ -147,7 +142,7 @@ const Container = styled.div`
       position: absolute;
       top: -40px;
       left: 25%;
-      img{
+      img {
         width: 400px;
       }
     }
@@ -168,69 +163,67 @@ const Container = styled.div`
     height: 20px;
     background-color: black;
   }
-  @media (max-width: 767px){
-    .gengar{
+  @media (max-width: 767px) {
+    .gengar {
       display: none;
     }
-    .venasaur{
+    .venasaur {
       display: none;
     }
-    .charizard{
+    .charizard {
       display: none;
     }
-    .blastoise{
+    .blastoise {
       display: none;
     }
-    .container-pokeball{
-      .title{
+    .container-pokeball {
+      .title {
         top: -10%;
         left: 10%;
-        img{
+        img {
           width: 300px;
         }
       }
-      .footer{
+      .footer {
         width: 100%;
-        .h4{
+        .h4 {
           text-align: center;
         }
       }
-      .bulbasaur{
+      .bulbasaur {
         position: absolute;
         right: -10%;
         top: 25%;
-
       }
-      .charmander{
+      .charmander {
         position: absolute;
         left: -10%;
         top: 20%;
       }
     }
   }
-  @media (max-width: 500px){
-    .container-pokeball{
+  @media (max-width: 500px) {
+    .container-pokeball {
       width: 100%;
-      .title{
+      .title {
         top: -10%;
         left: 25%;
-        img{
+        img {
           width: 250px;
         }
       }
-      .footer{
+      .footer {
         width: 100%;
-        .h4{
+        .h4 {
           text-align: center;
         }
       }
-      .bulbasaur{
+      .bulbasaur {
         position: absolute;
         right: 0%;
         top: 24%;
-
       }
-      .charmander{
+      .charmander {
         position: absolute;
         left: 0%;
         top: 20%;
