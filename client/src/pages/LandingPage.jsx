@@ -17,7 +17,7 @@ export const LandingPage = () => {
       <div className="container-pokeball">
         <div className="title">
           <img
-            style={{ width: "400px" }}
+           
             src={TitleBanner}
             alt=""
             className="title"
@@ -32,7 +32,7 @@ export const LandingPage = () => {
           </button>
         </div>
         <img
-          style={{ width: "110px" }}
+          style={{ width: "120px" }}
           src={Bulbasaur}
           alt="imagen de pokemon"
           className="bulbasaur"
@@ -147,6 +147,9 @@ const Container = styled.div`
       position: absolute;
       top: -40px;
       left: 25%;
+      img{
+        width: 400px;
+      }
     }
     .footer {
       position: absolute;
@@ -164,5 +167,74 @@ const Container = styled.div`
     width: 100%;
     height: 20px;
     background-color: black;
+  }
+  @media (max-width: 767px){
+    .gengar{
+      display: none;
+    }
+    .venasaur{
+      display: none;
+    }
+    .charizard{
+      display: none;
+    }
+    .blastoise{
+      display: none;
+    }
+    .container-pokeball{
+      .title{
+        top: -10%;
+        left: 10%;
+        img{
+          width: 300px;
+        }
+      }
+      .footer{
+        width: 100%;
+        .h4{
+          text-align: center;
+        }
+      }
+      .bulbasaur{
+        position: absolute;
+        right: -10%;
+        top: 25%;
+
+      }
+      .charmander{
+        position: absolute;
+        left: -10%;
+        top: 20%;
+      }
+    }
+  }
+  @media (max-width: 500px){
+    .container-pokeball{
+      width: 100%;
+      .title{
+        top: -10%;
+        left: 25%;
+        img{
+          width: 250px;
+        }
+      }
+      .footer{
+        width: 100%;
+        .h4{
+          text-align: center;
+        }
+      }
+      .bulbasaur{
+        position: absolute;
+        right: 0%;
+        top: 24%;
+
+      }
+      .charmander{
+        position: absolute;
+        left: 0%;
+        top: 20%;
+      }
+    }
   }
 `;
