@@ -49,7 +49,7 @@ const Container = styled.div`
     }
   }
   .search-container {
-    width: 300px;
+    width: 400px;
     height: 50px;
     border: 1px solid #111;
     border-radius: 30px;
@@ -57,7 +57,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
-    box-shadow: 1px 5px 5px rgba(0,0,0,0.5)
+    box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.5);
   }
   .container-nav {
     width: 400px;
@@ -73,19 +73,20 @@ const Container = styled.div`
     li {
       span {
         position: relative;
-        display: block;
+        display: inline-block;
         padding: 10px 20px;
+        border-radius: 10px;
         a {
           color: #111;
           text-decoration: none;
           text-transform: uppercase;
           font-weight: 500;
           letter-spacing: 0.2rem;
-          border-bottom: 1px solid transparent;
-          transition: 0.5s ease-in-out;
-          &:hover {
-            border-bottom: 1px solid black;
-          }
+        }
+        border: 1px solid transparent;
+        transition: 0.5s ease-in-out;
+        &:hover {
+          border: 1px solid black;
         }
       }
     }

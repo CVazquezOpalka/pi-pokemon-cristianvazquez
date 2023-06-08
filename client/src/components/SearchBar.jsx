@@ -8,7 +8,7 @@ export const SearchBar = () => {
  
   return (
     <Container>
-      <input type="text" placeholder="ingresa tu pokemon aqui" onChange={(e)=>console.log(e.target.value)}/>
+      <input type="text" placeholder="Busca a tu pokemon por nombre o id.." onChange={(e)=>console.log(e.target.value)}/>
       <button>
         <AiOutlineSearch />
       </button>
@@ -16,7 +16,7 @@ export const SearchBar = () => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.form`
   width: 100%;
   height: 100%;
   display: flex;
@@ -26,7 +26,7 @@ const Container = styled.div`
     width: 70%;
     margin: 0 auto;
     height: 80%;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     border: none;
     outline: none;
   }

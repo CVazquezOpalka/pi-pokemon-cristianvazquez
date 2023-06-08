@@ -10,13 +10,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPokemons } from "../redux/actions";
 
 export const HomePage = () => {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state.pokemons);
-
-  useEffect(() => {
-    dispatch(getPokemons());
-  }, []);
-
   return (
     <Container>
       <NavBar />
@@ -42,7 +35,7 @@ const Container = styled.div`
   .pagination_and_filteres {
     position: relative;
     width: 100%;
-    height: 80px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -55,12 +48,12 @@ const Container = styled.div`
       justify-content: center;
       background-color: red;
     }
-    .pagination{
-        width: 80%;
-        height:100%;
-        display: flex;
-        align-items:center;
-        background-color: green;
+    .pagination {
+      width: 80%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      background-color: green;
     }
   }
   .card_context {

@@ -28,15 +28,18 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     button {
-      width: 50px;
-      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       background: none;
       border: 1px solid #111;
       transition: all 0.5s ease-in-out;
       &:hover {
-        transform: scale(1.2);
+        transform: scale(1.1);
       }
     }
   }
