@@ -3,6 +3,8 @@ export const GET_POKEMON = "GET_POKEMON";
 export const CREATE_POKEMON = "CREATE_POKEMON";
 export const SEARCH_POKEMON = "SEARCH_POKEMON";
 export const GET_TYPES = "GET_TYPES";
+export const FILTER_TYPES = "FILTER_TYPES";
+export const SORT_ORDER = "SORT_ORDER";
 
 export function getTypes() {
   return function (dispatch) {
@@ -44,15 +46,45 @@ export function getPokemon(id) {
   };
 }
 
-export function searchPokemon(name) {
+export function searchPokemon(name, id) {
   return function (dispatch) {
-    return fetch(`http://localhost:3001/pokemons/?name=${name}`)
-      .then((res) => res.json())
-      .then((json) =>
-        dispatch({
-          type: SEARCH_POKEMON,
-          payload: json,
-        })
-      );
+    if (name && typeof name === "string") {
+      return fetch(`http://localhost:3001/pokemons/?name=${name}`)
+        .then((res) => res.json())
+        .then((json) =>
+          dispatch({
+            type: SEARCH_POKEMON,
+            payload: json,
+          })
+        );
+    }
+    if (id && typeof id === "number") {
+      return fetch(`http://localhost:3001/pokemons/${id}`)
+        .then((res) => res.json())
+        .then((json) =>
+          dispatch({
+            type: SEARCH_POKEMON,
+            payload: json,
+          })
+        );
+    }
+  };
+}
+
+export function filterTypes(type) {
+  return function (dispatch) {
+    dispatch({
+      type: FILTER_TYPES,
+      payload: type,
+    });
+  };
+}
+
+export function sortOrder(order = "des") {
+  return function (dispatch) {
+    dispatch({
+      type: SORT_ORDER,
+      payload: order,
+    });
   };
 }
