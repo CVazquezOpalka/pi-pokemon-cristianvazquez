@@ -12,19 +12,20 @@ export const CardContext = () => {
     dispatch(getPokemons());
   }, []);
   return (
-    <Container>
+    <>
       {loading ? (
-        <div className="loader">
+        <ContainerLoader>
           <Loader />
-        </div>
+        </ContainerLoader>
       ) : (
-        <>
-          {pokemon.map((e) => (
+        <Container>
+          <h1>cargarfo</h1>
+          {/* {pokemon.map((e) => (
             <Card key={e.name} pokemon={e} />
-          ))}
-        </>
+          ))} */}
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 
@@ -37,9 +38,11 @@ const Container = styled.div`
   align-items: center;
   justify-items: center;
   gap: 30px;
-  .loader{
-   position: absolute;
-   top:100%;
-   left:25%;
-  }
+`;
+const ContainerLoader = styled.main`
+  width: 100vw;
+  height: 506px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

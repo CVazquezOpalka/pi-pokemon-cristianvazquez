@@ -5,6 +5,7 @@ import {
   GET_TYPES,
   SORT_ORDER,
   FILTER_TYPES,
+  UPDATE_POKEMON,
 } from "./actions";
 
 const initialState = {
@@ -32,13 +33,19 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         pokemon: action.payload,
-        isLoading: false
+        isLoading: false,
+      };
+    case UPDATE_POKEMON:
+      return {
+        ...state,
+        pokemon: action.payload,
+        isLoading: true,
       };
     case SEARCH_POKEMON:
       return {
         ...state,
         pokemons: action.payload,
-        isLoading: false
+        isLoading: false,
       };
     case FILTER_TYPES:
       return {

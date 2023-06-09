@@ -5,6 +5,7 @@ export const SEARCH_POKEMON = "SEARCH_POKEMON";
 export const GET_TYPES = "GET_TYPES";
 export const FILTER_TYPES = "FILTER_TYPES";
 export const SORT_ORDER = "SORT_ORDER";
+export const UPDATE_POKEMON = "UPDATE_POKEMON";
 
 export function getTypes() {
   return function (dispatch) {
@@ -86,5 +87,12 @@ export function sortOrder(order = "des") {
       type: SORT_ORDER,
       payload: order,
     });
+  };
+}
+
+export function updatePokemon(payload) {
+  return {
+    type: UPDATE_POKEMON,
+    payload,
   };
 }

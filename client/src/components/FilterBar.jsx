@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 
-export const FilterBar = () => {
+export const FilterBar = ({ openDrawwer, drawwer }) => {
   return (
     <Container>
       <div className="btn_filter">
-        <button>
+        <button onClick={() => openDrawwer(!drawwer)}>
           <MdFilterAlt />
         </button>
       </div>
@@ -31,8 +31,8 @@ const Container = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 30px;
-      height: 30px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
       font-size: 1.2rem;
       background: none;

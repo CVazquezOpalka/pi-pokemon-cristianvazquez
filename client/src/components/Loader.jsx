@@ -35,7 +35,7 @@ const Container = styled.div`
       border: 15px solid #000;
       border-radius: 50%;
       overflow: hidden;
-      animation: animate 0.25s ease-in-out, spin 3s ease-in-out 5;
+      animation: animate 0.25s ease-in-out, spin 3s ease-in-out 7;
       &::before,
       &::after {
         content: "";
@@ -63,7 +63,7 @@ const Container = styled.div`
         border-radius: 50%;
         z-index: 10;
         box-shadow: 0 0 0 20px #000;
-        animation: button 3s ease-in-out 5;
+        animation: button 3s ease-in-out 7;
       }
     }
   }
@@ -114,12 +114,12 @@ const Container = styled.div`
         width: 250px;
         height: 250px;
         border: 7px solid #000;
-        &::after{
-            top: calc(50% - 6px);
-            height: 10px;
+        &::after {
+          top: calc(50% - 6px);
+          height: 10px;
         }
       }
-      .pokebutton{
+      .pokebutton {
         top: calc(50% - 50px);
         left: calc(50% - 50px);
         width: 100px;

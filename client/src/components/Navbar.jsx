@@ -46,7 +46,7 @@ const Container = styled.div`
     justify-content: center;
     img {
       width: 200px;
-      z-index:100;
+      z-index:10;
     }
   }
   .search-container {
@@ -77,6 +77,7 @@ const Container = styled.div`
         display: inline-block;
         padding: 10px 20px;
         border-radius: 10px;
+        cursor: pointer;
         a {
           color: #111;
           text-decoration: none;

@@ -48,7 +48,7 @@ const Container = styled.div`
   overflow: hidden;
   opacity: 0.5;
   transition: 0.5s ease-in-out;
-  background: radial-gradient(closest-side, rgba(0,0,0,0.4), transparent);
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.4), transparent);
   backdrop-filter: blur(5px);
 
   &:hover {
@@ -99,75 +99,75 @@ const Container = styled.div`
         border-radius: 10px;
       }
       .water {
-        background-color: #4592c4;
+        background-color: var(--color-water);
       }
 
       .grass {
-        background-color: #9bcc50;
+        background-color: var(--color-grass);
       }
 
       .poison {
-        background-color: #7e0058;
+        background-color: var(--color-poison);
       }
 
       .fire {
-        background-color: #ff7402;
+        background-color: var(--color-fire);
       }
 
       .bug {
-        background-color: #729f3f;
+        background-color: var(--color-bug);
       }
 
       .dragon {
-        background: linear-gradient(180deg, #53a4cf 50%, #f16e57 50%);
+        background: var(--color-dragon);
       }
 
       .flying {
-        background-color: #3dc7ef;
+        background-color: var(--color-flying);
       }
 
       .ground {
-        background-color: #ab9842;
+        background-color: var(--color-ground);
       }
 
       .steel {
-        background-color: #9eb7b8;
+        background-color: var(--color-steel);
       }
 
       .psychic {
-        background-color: #f366b9;
+        background-color: var(--color-psychic);
       }
 
       .ice {
-        background-color: #51c4e7;
+        background-color: var(--color-ice);
       }
 
       .ghost {
-        background-color: #4d5b64;
+        background-color: var(--color-ghost);
       }
 
       .normal {
-        background-color: #a4acaf;
+        background-color: var(--color-normal);
       }
 
       .rock {
-        background-color: #a38c21;
+        background-color: var(--color-rock);
       }
 
       .electric {
-        background-color: #bba909;
+        background-color: var(--color-electric);
       }
 
       .fighting {
-        background-color: #d56723;
+        background-color: var(--color-fighting);
       }
 
       .fairy {
-        background-color: #fdb9e9;
+        background-color: var(--color-fairy);
       }
 
       .dark {
-        background-color: #707070;
+        background-color: var(--color-dark);
       }
     }
   }
