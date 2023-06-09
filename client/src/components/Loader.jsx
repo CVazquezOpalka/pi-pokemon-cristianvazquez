@@ -4,9 +4,9 @@ import styled from "styled-components";
 export const Loader = () => {
   return (
     <Container>
-      <div class="container">
-        <div class="mainball">
-          <div class="pokebutton"></div>
+      <div className="container">
+        <div className="mainball">
+          <div className="pokebutton"></div>
         </div>
       </div>
     </Container>
@@ -35,7 +35,7 @@ const Container = styled.div`
       border: 15px solid #000;
       border-radius: 50%;
       overflow: hidden;
-      animation: animate  0.25s ease-in-out, spin 3s ease-in-out 3;
+      animation: animate 0.25s ease-in-out, spin 3s ease-in-out 5;
       &::before,
       &::after {
         content: "";
@@ -47,7 +47,7 @@ const Container = styled.div`
         height: 50%;
       }
       &::after {
-        top: calc(50% - 15px);
+        top: calc(50% - 8px);
         width: 100%;
         height: 15px;
         background: #000;
@@ -63,7 +63,7 @@ const Container = styled.div`
         border-radius: 50%;
         z-index: 10;
         box-shadow: 0 0 0 20px #000;
-        animation: button 3s ease-in-out 3;
+        animation: button 3s ease-in-out 5;
       }
     }
   }
@@ -101,6 +101,33 @@ const Container = styled.div`
     }
     100% {
       background: #7f8c8d;
+    }
+  }
+  @media (max-width: 767px) {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .container {
+      .mainball {
+        width: 250px;
+        height: 250px;
+        border: 7px solid #000;
+        &::after{
+            top: calc(50% - 6px);
+            height: 10px;
+        }
+      }
+      .pokebutton{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        width: 100px;
+        height: 100px;
+        background: #7f8c8d;
+        border: 10px solid #fff;
+        border-radius: 50%;
+      }
     }
   }
 `;

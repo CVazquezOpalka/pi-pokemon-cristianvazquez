@@ -46,6 +46,7 @@ const Container = styled.div`
     justify-content: center;
     img {
       width: 200px;
+      z-index:100;
     }
   }
   .search-container {
@@ -95,7 +96,7 @@ const Container = styled.div`
     margin: 0;
     width: 100%;
     flex-direction: column;
-    height: 220px;
+    height: 250px;
     align-items: center;
     justify-content: center;
     .search-container {
@@ -104,15 +105,23 @@ const Container = styled.div`
     .container-nav {
       width: 100%;
       ul {
+        margin-bottom: 15px;
         width: 100%;
+        display: flex;
         align-items: center;
         justify-content: center;
         li {
+          margin: 0 auto;
           span {
-            margin-right: 75px;
+            a {
+              letter-spacing: 0.1rem;
+            }
           }
         }
       }
+    }
+    .search-container {
+      margin-bottom: 15px;
     }
   }
 `;
