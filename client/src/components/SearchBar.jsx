@@ -23,6 +23,7 @@ const Container = styled.form`
   align-items: center;
   justify-content: center;
   input {
+    display: flex;
     width: 70%;
     margin: 0 auto;
     height: 80%;
@@ -44,6 +45,7 @@ const Container = styled.form`
     font-size: 1.4rem;
     border: none;
     transition:0.5s;
+    cursor: pointer;
     &:hover{
         transform: scale(1.1)
     }

@@ -27,19 +27,21 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      background: none;
-      border: 1px solid #111;
-      transition: all 0.5s ease-in-out;
-      &:hover {
-        transform: scale(1.1);
-      }
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #111;
+    background: none;
+    transition: 0.3s ease;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.2);
+      background-color: #333;
+      color: #fff;
     }
   }
+}
 `;

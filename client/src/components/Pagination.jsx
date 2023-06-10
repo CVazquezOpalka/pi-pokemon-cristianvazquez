@@ -1,17 +1,23 @@
 import React from "react";
 import styled from "styled-components";
+import {AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'
 
 export const Pagination = ({ totalPages, onPrev, onNext, pages }) => {
+  const actualPage = Math.ceil(pages / totalPages) + 1;
   return (
-    <Container>
-        {
-           pages > 1? (<button onClick={onPrev}>prev</button>) : null
-        }
-        <h3>
-          <span>{Math.ceil(pages/totalPages) + 1}</span> de <span>{totalPages}</span>
-        </h3>
-        <button onClick={onNext}>next</button>
-    </Container>
+    <>
+      {totalPages == 0 ? null : (
+        <Container>
+          {pages > 1 ? <button onClick={onPrev}><AiOutlineLeft/></button> : null}
+          <h3>
+            <span>{actualPage}</span> de <span>{totalPages}</span>
+          </h3>
+          {actualPage == totalPages ? null : (
+            <button onClick={onNext}><AiOutlineRight/></button>
+          )}
+        </Container>
+      )}
+    </>
   );
 };
 
@@ -23,16 +29,21 @@ const Container = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
-  button{
+  button {
     width: 35px;
     height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     border: 1px solid #111;
     background: none;
     transition: 0.3s ease;
-    &:hover{
-        transform: scale(1.1)
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.2);
+      background-color: #333;
+      color: #fff;
     }
   }
-  
 `;

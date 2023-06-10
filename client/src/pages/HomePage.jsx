@@ -39,6 +39,7 @@ export const HomePage = () => {
       setPage(page - 12);
     }
   };
+ 
   useEffect(() => {
     dispatch(getTypes());
   }, []);
@@ -109,10 +110,10 @@ const Container = styled.div`
   height: auto;
   position: relative;
   .drawwer_close {
-    position:fixed;
-    top:0;
+    position: fixed;
+    top: 0;
     left: -300px;
-	  width: 300px;
+    width: 300px;
     transition: all 0.3s ease;
   }
   .drawwer {

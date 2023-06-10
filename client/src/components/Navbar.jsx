@@ -14,11 +14,6 @@ export const NavBar = () => {
         <ul>
           <li>
             <span>
-              <Link to="/favorites">My Team</Link>
-            </span>
-          </li>
-          <li>
-            <span>
               <Link to="/createPokemon">Create Pokemon</Link>
             </span>
           </li>
@@ -46,7 +41,7 @@ const Container = styled.div`
     justify-content: center;
     img {
       width: 200px;
-      z-index:10;
+      z-index: 10;
     }
   }
   .search-container {
@@ -72,11 +67,17 @@ const Container = styled.div`
       list-style: none;
     }
     li {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       span {
         position: relative;
         display: inline-block;
         padding: 10px 20px;
         border-radius: 10px;
+         border: 1px solid transparent;
+        transition: 0.5s ease-in-out;
         cursor: pointer;
         a {
           color: #111;
@@ -84,11 +85,14 @@ const Container = styled.div`
           text-transform: uppercase;
           font-weight: 500;
           letter-spacing: 0.2rem;
+          &:hover {
+            color: #fff;
+          }
         }
-        border: 1px solid transparent;
-        transition: 0.5s ease-in-out;
         &:hover {
           border: 1px solid black;
+          background: #333;
+          color: #fff;
         }
       }
     }
@@ -101,7 +105,9 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     .search-container {
+      display: flex;
       height: 100px;
+      margin-bottom: 15px;
     }
     .container-nav {
       width: 100%;
@@ -121,7 +127,12 @@ const Container = styled.div`
         }
       }
     }
+  }
+  @media (max-width: 400px) {
     .search-container {
+      display: flex;
+      width: 80%;
+      height: 100px;
       margin-bottom: 15px;
     }
   }
