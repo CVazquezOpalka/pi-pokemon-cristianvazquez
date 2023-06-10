@@ -1,4 +1,3 @@
-const axios = require("axios");
 const { info } = require("../middleware/index.js");
 const { Pokemon, Tipo } = require("../db.js");
 
@@ -7,7 +6,13 @@ const getPokemons = async (req, res) => {
   try {
     if (name) {
       const result = await info(name, null);
-      return res.status(200).json(result);
+      if (!result) {
+        return res
+          .status(400)
+          .send({
+            message: `El pokemon con el nombre: ${name}, no se encuentra en la base de datos`,
+          });
+      } else return res.status(200).json(result);
     }
     const pokemons = await info();
     res.status(200).json(pokemons);
@@ -20,31 +25,29 @@ const getPokemonById = async (req, res) => {
   const { id } = req.params;
   try {
     const data = await info(null, id);
-    res.status(200).json(data);
+    if (!data) {
+      return res.status(400).send({
+        message: `El pokemon con el id ${id} no se encuentra en la base de datos`,
+      });
+    } else res.status(200).json(data);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
 };
 
-const getPokemonByName = async (req, res) => {
-  
-  res.send("recibiendo info por query");
-};
-
-
 const createPokemons = async (req, res) => {
   let { name, image, vida, fuerza, defensa, velocidad, altura, peso, tipos } =
     req.body;
-  const poke = await Pokemon.findOne({ where: { name } });
+  const findPoke = await Pokemon.findOne({ where: { name } });
   try {
     if (!name) {
       return res
         .status(400)
-        .send({ message: "el parametro name es requerido" });
+        .send({ message: "El parametro name es requerido" });
     }
-    if (poke) {
+    if (findPoke) {
       return res.status(400).send({
-        message: `el pokemon con el nombre ${name}, ya se encuentra en la base de datos`,
+        message: `El pokemon con el nombre ${name}, ya se encuentra en la base de datos`,
       });
     }
     if (
@@ -80,7 +83,6 @@ const createPokemons = async (req, res) => {
 
 module.exports = {
   getPokemonById,
-  getPokemonByName,
   getPokemons,
   createPokemons,
 };

@@ -24,9 +24,9 @@ export const Card = ({ pokemon }) => {
           </h4>
         </div>
         <div className="types">
-          {pokemon.tipos?.map((e) => (
+          {pokemon.tipos?.map((e, index) => (
             <>
-              <span key={e.name ? e.name : e} className={e.name ? e.name : e}>
+              <span key={index} className={e.name ? e.name : e}>
                 {e.name ? e.name : e}
               </span>
             </>

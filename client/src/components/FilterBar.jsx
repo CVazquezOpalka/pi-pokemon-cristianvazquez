@@ -10,7 +10,6 @@ export const FilterBar = ({ openDrawwer, drawwer }) => {
           <MdFilterAlt />
         </button>
       </div>
-      <div className="cajon__body"></div>
     </Container>
   );
 };

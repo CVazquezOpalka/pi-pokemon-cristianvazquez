@@ -10,8 +10,39 @@ import { useSelector, useDispatch } from "react-redux";
 import { getTypes } from "../redux/actions";
 
 export const HomePage = () => {
+  /* ESTADOS GENERALES */
+  const typeState = useSelector((state) => state.types);
+  const pokemonState = useSelector((state) => state.pokemons);
+  const dispatch = useDispatch();
+  /* ESTADOS LOCALES, CONTRALAN UNA FUNCION ESPECIFICA DEL COMPONENTE */
   const [show, setShow] = useState(false);
-  const typeState = useSelector((state) => state.type);
+  const [page, setPage] = useState(0);
+  /* FUNCIONES DE PAGINACION  */
+  //TOTAL DE PAGINAS
+  const totalPages = Math.ceil(pokemonState.length / 12);
+  //CORTE DEL ARRAY ESTADO GENERAL QUE GUARDA LOS POKEMONS
+  const pagination = () => {
+    if (pokemonState.length) return pokemonState.slice(page, page + 12);
+    return [];
+  };
+  //ARRAY CON EL QUE TENGO QUE TRABAJAR
+  const pokePagination = pagination();
+  //CONTROLADOR DE EVENTO NEXT
+  const onNextPage = () => {
+    if (pokemonState.length > page + 12) {
+      setPage(page + 12);
+    }
+  };
+  //CONTROLADOR DE EVENTO PREV
+  const onPreviusPage = () => {
+    if (page > 0) {
+      setPage(page - 12);
+    }
+  };
+  useEffect(() => {
+    dispatch(getTypes());
+  }, []);
+
   return (
     <Container>
       <NavBar />
@@ -21,7 +52,12 @@ export const HomePage = () => {
             <FilterBar openDrawwer={setShow} drawwer={show} />
           </div>
           <div className="pagination">
-            <Pagination />
+            <Pagination
+              totalPages={totalPages}
+              pages={page}
+              onPrev={onPreviusPage}
+              onNext={onNextPage}
+            />
           </div>
         </div>
       </div>
@@ -35,13 +71,34 @@ export const HomePage = () => {
           <div className="title">
             <h3>Filtros de tipo</h3>
           </div>
-          <div className="checkbox_container"></div>
+          <div className="checkbox_container">
+            {typeState?.map((e) => (
+              <div className="checkbox" key={e.id}>
+                <input type="checkbox" />
+                <label>{e.name}</label>
+              </div>
+            ))}
+          </div>
         </div>
         <hr />
-        <div className="bottom_bar"></div>
+        <div className="bottom_bar">
+          <div className="title">
+            <h3>otros filtros</h3>
+          </div>
+          <div className="other_filteres">
+            <div className="checkbox">
+              <input type="checkbox" />
+              <label>Z - A</label>
+            </div>
+            <div className="checkbox">
+              <input type="checkbox" />
+              <label>Por Ataque</label>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="card_context">
-        <CardContext />
+        <CardContext pokePagination={pokePagination} />
       </div>
     </Container>
   );
@@ -52,7 +109,11 @@ const Container = styled.div`
   height: auto;
   position: relative;
   .drawwer_close {
-    display: none;
+    position:fixed;
+    top:0;
+    left: -300px;
+	  width: 300px;
+    transition: all 0.3s ease;
   }
   .drawwer {
     position: fixed;
@@ -66,14 +127,13 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: 0.5s ease-in;
+    transition: all 0.3s ease-in-out;
     hr {
       width: 80%;
       background: #fff;
       border: 1px solid #fff;
     }
     .top_bar {
-      background-color: red;
       width: 100%;
       height: 50px;
       display: flex;
@@ -117,9 +177,51 @@ const Container = styled.div`
       display: flex;
       flex-direction: column;
       .title {
-        background-color: red;
         width: 100%;
-        height: 50px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        h3 {
+          width: 80%;
+          text-align: center;
+          color: #fff;
+          text-transform: capitalize;
+          text-decoration: underline;
+          font-weight: 500;
+          letter-spacing: 1px;
+          margin-bottom: 10px;
+        }
+      }
+      .checkbox_container {
+        width: 100%;
+        height: 350px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
+        .checkbox {
+          width: 100%;
+          height: 100%;
+          align-items: center;
+          justify-content: center;
+          margin-left: 60px;
+          label {
+            text-transform: capitalize;
+            font-weight: 400;
+            margin-left: 5px;
+            color: #fff;
+          }
+        }
+      }
+    }
+    .bottom_bar {
+      width: 100%;
+      height: 150px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      .title {
+        width: 100%;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -133,31 +235,37 @@ const Container = styled.div`
           letter-spacing: 1px;
         }
       }
-      .checkbox_container{
-        background-color: green;
+      .other_filteres {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
-        height: 350px;
-        
-
+        height: auto;
+        .checkbox {
+          width: 80%;
+          height: 100%;
+          align-items: center;
+          justify-content: center;
+          margin-left: 30px;
+          label {
+            text-transform: capitalize;
+            font-weight: 400;
+            margin-left: 5px;
+            color: #fff;
+          }
+        }
       }
-    }
-    .bottom_bar{
-      width: 100%;
-      height: 150px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      background-color: red;
     }
   }
   .pagination_and_filteres {
     position: relative;
     width: 100%;
-    height: 50px;
+    height: auto;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
     .top_content {
-      background-color: red;
       width: 100%;
       height: 50px;
       display: flex;

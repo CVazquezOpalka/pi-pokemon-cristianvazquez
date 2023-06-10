@@ -14,7 +14,7 @@ export const DetailPage = () => {
   const { id } = useParams();
 
   const cleanUp = () => {
-    dispatch(updatePokemon({ pokemon: {}}));
+    dispatch(updatePokemon({ pokemon: {} }));
   };
 
   useEffect(() => {
@@ -22,12 +22,11 @@ export const DetailPage = () => {
     dispatch(getPokemon(id));
     //desmonta el componente
     return () => cleanUp();
-    //vuelve a montar un nuevo componente
   }, []);
   console.log(pokemonState);
   return (
     <Container>
-      {loading ? (
+      {pokemonState.id === undefined ? (
         <div className="loader">
           <Loader />
         </div>
@@ -95,7 +94,7 @@ export const DetailPage = () => {
                 <div className="stat-group">
                   <span>Defensa</span>
                   <div className="progress-bar"></div>
-                  <span className="counter-stat">{pokemonState.defefensa}</span>
+                  <span className="counter-stat">{pokemonState.defensa}</span>
                 </div>
                 <div className="stat-group">
                   <span>velocidad</span>

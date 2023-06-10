@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Card, Loader } from "./index";
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemons } from "../redux/actions";
 
-export const CardContext = () => {
+export const CardContext = ({pokePagination}) => {
+
   const dispatch = useDispatch();
   const pokemon = useSelector((state) => state.pokemons);
   const loading = useSelector((state) => state.isLoading);
@@ -19,10 +20,11 @@ export const CardContext = () => {
         </ContainerLoader>
       ) : (
         <Container>
-          <h1>cargarfo</h1>
-          {/* {pokemon.map((e) => (
-            <Card key={e.name} pokemon={e} />
-          ))} */}
+          {pokePagination.map((e) => (
+            <div key={e.name}>
+              <Card pokemon={e} />
+            </div>
+          ))}
         </Container>
       )}
     </>

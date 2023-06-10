@@ -17,12 +17,6 @@ router.get("/", async (req, res) => {
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
-
-  /* for (t of data.results) {
-    const existe = await Tipo.findOne({ where: { name: t.name } });
-    if (existe) return res.json(await Tipo.findAll());
-    await Tipo.create({ name: t.name });
-  } */
 });
 
 module.exports = router;

@@ -13,6 +13,9 @@ const initialState = {
   pokemons: [],
   pokemon: {},
   isLoading: true,
+  totalPages:0,
+  currentPage:0,
+  nextPage:0
 };
 
 export const rootReducer = (state = initialState, action) => {
