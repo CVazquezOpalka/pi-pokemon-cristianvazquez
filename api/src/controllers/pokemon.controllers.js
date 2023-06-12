@@ -7,11 +7,9 @@ const getPokemons = async (req, res) => {
     if (name) {
       const result = await info(name, null);
       if (!result) {
-        return res
-          .status(400)
-          .send({
-            message: `El pokemon con el nombre: ${name}, no se encuentra en la base de datos`,
-          });
+        return res.status(400).send({
+          message: `El pokemon con el nombre: ${name}, no se encuentra en la base de datos`,
+        });
       } else return res.status(200).json(result);
     }
     const pokemons = await info();
@@ -38,8 +36,12 @@ const getPokemonById = async (req, res) => {
 const createPokemons = async (req, res) => {
   let { name, image, vida, fuerza, defensa, velocidad, altura, peso, tipos } =
     req.body;
-  const findPoke = await Pokemon.findOne({ where: { name } });
+
   try {
+    const pokeArr = await info();
+    const maxId = Math.max(...pokeArr.map((e) => e.id));
+    const id = maxId + 1;
+    const findPoke = await Pokemon.findOne({ where: { name } });
     if (!name) {
       return res
         .status(400)
@@ -62,9 +64,13 @@ const createPokemons = async (req, res) => {
         .status(400)
         .send({ message: "Alguno de los argumentos no es un numero" });
     }
+    const alterImage =
+      image ||
+      "https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_640.png";
     const newPokemon = await Pokemon.create({
+      id,
       name: name.toLowerCase(),
-      image: image,
+      image: alterImage,
       vida: Number(vida),
       fuerza: Number(fuerza),
       defensa: Number(defensa),

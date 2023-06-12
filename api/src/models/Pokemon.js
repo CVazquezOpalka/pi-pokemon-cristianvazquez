@@ -7,13 +7,9 @@ module.exports = (sequelize) => {
     "pokemon",
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
-      },
-      idPoke: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true,
       },
       name: {
         type: DataTypes.STRING,
