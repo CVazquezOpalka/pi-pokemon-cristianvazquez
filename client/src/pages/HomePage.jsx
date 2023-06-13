@@ -7,26 +7,76 @@ import {
   CardContext,
 } from "../components/index";
 import { useSelector, useDispatch } from "react-redux";
-import { getTypes } from "../redux/actions";
+import { filterTypes, getPokemons } from "../redux/actions";
 
 export const HomePage = () => {
   /* ESTADOS GENERALES */
   const typeState = useSelector((state) => state.types);
   const pokemonState = useSelector((state) => state.pokemons);
+  const type = useSelector((state) => state.type);
+  const filterState = useSelector((state) => state.pokemonFiltered);
   const dispatch = useDispatch();
   /* ESTADOS LOCALES, CONTRALAN UNA FUNCION ESPECIFICA DEL COMPONENTE */
+  //controla el toogle de la barra de filtros
   const [show, setShow] = useState(false);
+  //controla el paginado // intntar realizar un custom hook
   const [page, setPage] = useState(0);
+  //contra el eventro de filtros del checkbox;
+  const [types, setTypes] = useState({
+    normal: false,
+    flying: false,
+    ground: false,
+    bug: false,
+    steel: false,
+    water: false,
+    electric: false,
+    ice: false,
+    dark: false,
+    unknown: false,
+    fighting: false,
+    poison: false,
+    rock: false,
+    ghost: false,
+    fire: false,
+    grass: false,
+    psychic: false,
+    dragon: false,
+    fairy: false,
+    shadow: false,
+  });
+  /* FUNCIONES DE FILTROS */
+  const handleCheckbox = (e) => {
+    setTypes({
+      ...types,
+      [e.target.name]: e.target.checked,
+    });
+    if (e.target.checked) {
+      dispatch(filterTypes(e.target.name));
+    } else {
+      dispatch(getPokemons());
+    }
+  };
+
   /* FUNCIONES DE PAGINACION  */
-  //TOTAL DE PAGINAS
-  const totalPages = Math.ceil(pokemonState.length / 12);
+
+  const totalPages = (array) => Math.ceil(pokemonState.length / 12);
+
+  const currentPage =(num) => num==0? num : Math.ceil(page / totalPages) + 1;
   //CORTE DEL ARRAY ESTADO GENERAL QUE GUARDA LOS POKEMONS
-  const pagination = () => {
-    if (pokemonState.length) return pokemonState.slice(page, page + 12);
+  const pagination = (array, type) => {
+    const result = array.filter((e) => e.tipos.includes(type));
+    if (type) return result;
+    if (array.length) return array;
     return [];
   };
   //ARRAY CON EL QUE TENGO QUE TRABAJAR
-  const pokePagination = pagination();
+  const pokePagination = pagination(pokemonState, false).slice(page, page + 12);
+  const filterPagination = pagination(pokemonState, type)
+  let total = totalPages(pokePagination);
+ let totalFilterPage = totalPages(filterPagination)
+  let current = currentPage(total);
+  let currentFilter = currentPage(totalFilterPage)
+  console.log(filterPagination)
   //CONTROLADOR DE EVENTO NEXT
   const onNextPage = () => {
     if (pokemonState.length > page + 12) {
@@ -39,10 +89,6 @@ export const HomePage = () => {
       setPage(page - 12);
     }
   };
- 
-  useEffect(() => {
-    dispatch(getTypes());
-  }, []);
 
   return (
     <Container>
@@ -54,8 +100,10 @@ export const HomePage = () => {
           </div>
           <div className="pagination">
             <Pagination
-              totalPages={totalPages}
-              pages={page}
+              totalPages={total}
+              totalPagesFiltradas={totalFilterPage}
+              pages={current}
+              pagesFiltradas = {currentFilter}
               onPrev={onPreviusPage}
               onNext={onNextPage}
             />
@@ -75,7 +123,13 @@ export const HomePage = () => {
           <div className="checkbox_container">
             {typeState?.map((e) => (
               <div className="checkbox" key={e.id}>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  value={e.name}
+                  id={e.id}
+                  name={e.name}
+                  onClick={handleCheckbox}
+                />
                 <label>{e.name}</label>
               </div>
             ))}
@@ -99,7 +153,10 @@ export const HomePage = () => {
         </div>
       </div>
       <div className="card_context">
-        <CardContext pokePagination={pokePagination} />
+        <CardContext
+          pokePagination={pokePagination}
+          filterPagination={filterPagination}
+        />
       </div>
     </Container>
   );

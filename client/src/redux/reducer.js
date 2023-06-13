@@ -11,11 +11,10 @@ import {
 const initialState = {
   types: [],
   pokemons: [],
+  pokemonFiltered: [],
   pokemon: {},
   isLoading: true,
-  totalPages:0,
-  currentPage:0,
-  nextPage:0
+  type:"",
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -53,7 +52,7 @@ export const rootReducer = (state = initialState, action) => {
     case FILTER_TYPES:
       return {
         ...state,
-        pokemons: state.pokemons.filter((e) => e.type.includes(action.payload)),
+        type: action.payload,
       };
     default:
       return state;

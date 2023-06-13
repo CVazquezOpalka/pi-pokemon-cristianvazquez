@@ -1,4 +1,6 @@
-import React from "react";
+import React, {useEffect} from "react";
+import { Routes, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   LandingPage,
   HomePage,
@@ -6,9 +8,14 @@ import {
   DetailPage,
   Favorites,
 } from "./pages/index";
-import { Routes, Route } from "react-router-dom";
+import { getTypes, getPokemons } from "./redux/actions";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(getTypes());
+    dispatch(getPokemons())
+  },[])
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />

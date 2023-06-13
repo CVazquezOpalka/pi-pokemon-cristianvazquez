@@ -6,7 +6,7 @@ export const GET_TYPES = "GET_TYPES";
 export const FILTER_TYPES = "FILTER_TYPES";
 export const SORT_ORDER = "SORT_ORDER";
 export const UPDATE_POKEMON = "UPDATE_POKEMON";
-export const PAGINATION = "PAGINATION"
+export const PAGINATION = "PAGINATION";
 
 export function getTypes() {
   return function (dispatch) {
@@ -20,8 +20,6 @@ export function getTypes() {
       );
   };
 }
-
-
 
 export function getPokemons() {
   return function (dispatch) {
@@ -73,7 +71,6 @@ export function searchPokemon(name, id) {
     }
   };
 }
-
 
 export function filterTypes(type) {
   return function (dispatch) {
