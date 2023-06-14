@@ -1,20 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import {AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'
-import { useSelector } from "react-redux";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
-export const Pagination = ({ totalPages, totalPagesFiltradas, onPrev, onNext, pages, pagesFiltradas }) => {
-    const type = useSelector(state=> state.type)
+export const Pagination = ({ totalPages, onPrev, onNext, pages }) => {
+  
   return (
     <>
-      {totalPages == 0 ? null : (
+      {totalPages === 0 ? null : (
         <Container>
-          {pages > 1 ? <button onClick={onPrev}><AiOutlineLeft/></button> : null}
+          {pages > 1 ? (
+            <button onClick={onPrev}>
+              <AiOutlineLeft />
+            </button>
+          ) : null}
           <h3>
             <span>{pages}</span> de <span>{totalPages}</span>
           </h3>
-          {pages == totalPages ? null : (
-            <button onClick={onNext}><AiOutlineRight/></button>
+          {pages === totalPages ? null : (
+            <button onClick={onNext}>
+              <AiOutlineRight />
+            </button>
           )}
         </Container>
       )}

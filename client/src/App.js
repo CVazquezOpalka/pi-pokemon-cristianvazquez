@@ -9,6 +9,7 @@ import {
   Favorites,
 } from "./pages/index";
 import { getTypes, getPokemons } from "./redux/actions";
+import { Search } from "./pages/Search";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ function App() {
       <Route path="/createPokemon" element={<CreatePage />} />
       <Route path="/pokemon/:id" element={<DetailPage />} />
       <Route path="/favorites" element={<Favorites />} />
+      <Route path="/search" element={<Search />} />
     </Routes>
   );
 }

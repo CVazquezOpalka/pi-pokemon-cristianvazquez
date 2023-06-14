@@ -1,14 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { searchPokemon } from "../redux/actions";
 
 export const SearchBar = () => {
   const navigate = useNavigate();
- 
+  const dispatch = useDispatch();
+  const [name, setName] = useState("");
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setName(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    if (typeof name == "string") dispatch(searchPokemon(name, false));
+    if (Number(name)) dispatch(searchPokemon(false, name));
+    setName("");
+    navigate("/search")
+  };
+
   return (
-    <Container>
-      <input type="text" placeholder="Busca a tu pokemon por nombre o id.." onChange={(e)=>console.log(e.target.value)}/>
+    <Container onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Busca a tu pokemon por nombre o id.."
+        onChange={handleChange}
+      />
       <button>
         <AiOutlineSearch />
       </button>
@@ -44,10 +64,10 @@ const Container = styled.form`
     font-weight: 500;
     font-size: 1.4rem;
     border: none;
-    transition:0.5s;
+    transition: 0.5s;
     cursor: pointer;
-    &:hover{
-        transform: scale(1.1)
+    &:hover {
+      transform: scale(1.1);
     }
   }
 `;

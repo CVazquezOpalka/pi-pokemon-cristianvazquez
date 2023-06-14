@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
+import { MdFilterAlt} from "react-icons/md";
 
 export const FilterBar = ({ openDrawwer, drawwer }) => {
   return (

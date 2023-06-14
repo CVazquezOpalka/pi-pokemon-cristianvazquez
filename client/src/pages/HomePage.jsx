@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {
   NavBar,
@@ -7,16 +7,17 @@ import {
   CardContext,
 } from "../components/index";
 import { useSelector, useDispatch } from "react-redux";
-import { filterTypes, getPokemons } from "../redux/actions";
+import { filterTypes, getPokemons, updateType } from "../redux/actions";
+import { tipos } from "../assets/utils/utils.js";
 
 export const HomePage = () => {
   /* ESTADOS GENERALES */
   const typeState = useSelector((state) => state.types);
   const pokemonState = useSelector((state) => state.pokemons);
   const type = useSelector((state) => state.type);
-  const filterState = useSelector((state) => state.pokemonFiltered);
+  const order = useSelector((state) => state.order);
   const dispatch = useDispatch();
-  /* ESTADOS LOCALES, CONTRALAN UNA FUNCION ESPECIFICA DEL COMPONENTE */
+  //ESTADOS GENERALES, MANEJAN LA ACCION DEL TOOGLE, EL PAGINADO Y EL FILTRO DE TIPOS
   //controla el toogle de la barra de filtros
   const [show, setShow] = useState(false);
   //controla el paginado // intntar realizar un custom hook
@@ -53,30 +54,28 @@ export const HomePage = () => {
     if (e.target.checked) {
       dispatch(filterTypes(e.target.name));
     } else {
-      dispatch(getPokemons());
+      dispatch(updateType(""));
     }
   };
 
+  //aaray de trabajo para filtros;
+  const pokeFilterPagination = tipos(type, pokemonState);
+  console.log(pokeFilterPagination);
+  /*  if (type) pokemonState = tipos(type, pokemonState);
+  if (order) pokemonState = sortOrder(order, pokemonState); */
+
   /* FUNCIONES DE PAGINACION  */
-
-  const totalPages = (array) => Math.ceil(pokemonState.length / 12);
-
-  const currentPage =(num) => num==0? num : Math.ceil(page / totalPages) + 1;
+  //TOTAL DE PAGINAS
+  const totalPages = Math.ceil(pokemonState.length / 12);
+  //PAGINA ACTUAL
+  let currentPage = Math.ceil(page / pokemonState.length) + 1;
   //CORTE DEL ARRAY ESTADO GENERAL QUE GUARDA LOS POKEMONS
-  const pagination = (array, type) => {
-    const result = array.filter((e) => e.tipos.includes(type));
-    if (type) return result;
-    if (array.length) return array;
+  const pagination = () => {
+    if (pokemonState.length) return pokemonState.slice(page, page + 12);
     return [];
   };
   //ARRAY CON EL QUE TENGO QUE TRABAJAR
-  const pokePagination = pagination(pokemonState, false).slice(page, page + 12);
-  const filterPagination = pagination(pokemonState, type)
-  let total = totalPages(pokePagination);
- let totalFilterPage = totalPages(filterPagination)
-  let current = currentPage(total);
-  let currentFilter = currentPage(totalFilterPage)
-  console.log(filterPagination)
+  const pokePagination = pagination();
   //CONTROLADOR DE EVENTO NEXT
   const onNextPage = () => {
     if (pokemonState.length > page + 12) {
@@ -89,7 +88,6 @@ export const HomePage = () => {
       setPage(page - 12);
     }
   };
-
   return (
     <Container>
       <NavBar />
@@ -100,10 +98,8 @@ export const HomePage = () => {
           </div>
           <div className="pagination">
             <Pagination
-              totalPages={total}
-              totalPagesFiltradas={totalFilterPage}
-              pages={current}
-              pagesFiltradas = {currentFilter}
+              totalPages={totalPages}
+              pages={currentPage}
               onPrev={onPreviusPage}
               onNext={onNextPage}
             />
@@ -130,7 +126,7 @@ export const HomePage = () => {
                   name={e.name}
                   onClick={handleCheckbox}
                 />
-                <label>{e.name}</label>
+                <label htmlFor={e.name}>{e.name}</label>
               </div>
             ))}
           </div>
@@ -153,10 +149,7 @@ export const HomePage = () => {
         </div>
       </div>
       <div className="card_context">
-        <CardContext
-          pokePagination={pokePagination}
-          filterPagination={filterPagination}
-        />
+        <CardContext pokePagination={pokePagination} />
       </div>
     </Container>
   );

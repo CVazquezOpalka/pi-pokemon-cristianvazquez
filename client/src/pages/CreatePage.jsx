@@ -1,14 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
-import { getTypes } from "../redux/actions";
+import { useSelector} from "react-redux";
+
 
 export const CreatePage = () => {
   const typeState = useSelector((state) => state.types);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getTypes());
-  }, []);
+ 
 
   return (
     <Container>
@@ -46,12 +43,11 @@ export const CreatePage = () => {
           </div>
           <div className="tipos">
             <>
-              {typeState?.map((e) => {
-                <div className="checkbox" key={e.id}>
+              {typeState?.map((e) => (<div className="checkbox" key={e.id}>
                   <label>{e.name}</label>
                   <input type="checkbox" />
-                </div>;
-              })}
+                </div>)
+              )}
               </>
           </div>
         </form>

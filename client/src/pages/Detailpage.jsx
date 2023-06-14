@@ -6,24 +6,17 @@ import { getPokemon, updatePokemon } from "../redux/actions";
 import { Loader } from "../components/Loader";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+
 export const DetailPage = () => {
   const pokemonState = useSelector((state) => state.pokemon);
-  const loading = useSelector((state) => state.isLoading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const cleanUp = () => {
-    dispatch(updatePokemon({ pokemon: {} }));
-  };
-
   useEffect(() => {
-    //monta el componente
     dispatch(getPokemon(id));
-    //desmonta el componente
-    return () => cleanUp();
+    return () => dispatch(updatePokemon({}));
   }, []);
-  console.log(pokemonState);
   return (
     <Container>
       {pokemonState.id === undefined ? (
@@ -60,15 +53,10 @@ export const DetailPage = () => {
                   </h3>
                 </div>
                 <div className="types">
-                  {pokemonState.tipos?.map((e) => (
-                    <>
-                      <span
-                        key={e.name ? e.name : e}
-                        className={e.name ? e.name : e}
-                      >
-                        {e.name ? e.name : e}
-                      </span>
-                    </>
+                  {pokemonState.tipos?.map((e, index) => (
+                    <span key={index} className={e.name ? e.name : e}>
+                      {e.name ? e.name : e}
+                    </span>
                   ))}
                 </div>
               </div>

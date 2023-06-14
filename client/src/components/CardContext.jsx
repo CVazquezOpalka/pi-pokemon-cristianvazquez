@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Card, Loader } from "./index";
 import { useSelector } from "react-redux";
 
-export const CardContext = ({ pokePagination, filterPagination }) => {
+export const CardContext = ({ pokePagination }) => {
   const loading = useSelector((state) => state.isLoading);
   return (
     <>
@@ -11,14 +11,6 @@ export const CardContext = ({ pokePagination, filterPagination }) => {
         <ContainerLoader>
           <Loader />
         </ContainerLoader>
-      ) : filterPagination.length ? (
-        <Container>
-          {filterPagination?.map((e) => (
-            <div key={e.id}>
-              <Card pokemon={e} />
-            </div>
-          ))}
-        </Container>
       ) : (
         <Container>
           {pokePagination.map((e) => (

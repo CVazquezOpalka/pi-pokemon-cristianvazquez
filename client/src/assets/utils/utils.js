@@ -1,5 +1,6 @@
-/* export const tipos = (type, array) => {
-  array.length ? array.filter((e) => e.tipos.includes(type)) : [];
+export const tipos = (type, array) => {
+  if (array.length && type) return array.filter((p) => p.tipos.includes(type));
+  else return [];
 };
 
 export const sortOrder = (order, array) => {
@@ -18,9 +19,9 @@ export const sortOrder = (order, array) => {
 
   switch (order) {
     case "a-z":
-      return sortPorNombre(nombres, (pokemon) => pokemon.name);
+      return sortPorNombre(nombres, (nombres) => nombres.name);
     case "z-a":
-      return sortPorNombre(nombres, (pokemon) => pokemon.name).reverse();
+      return sortPorNombre(nombres, (nombres) => nombres.name).reverse();
     case "fuerza+":
       return fuerza.sort((a, b) => b - a);
     case "fuerza-":
@@ -28,8 +29,8 @@ export const sortOrder = (order, array) => {
     default:
       return array;
   }
-}; */
-
+};
+/* 
 export const tipos = (type, array) => {
   if (array.length) return array.filter((p) => p.type.includes(type));
   return [];
@@ -79,3 +80,4 @@ export const ordered = (order, array) => {
       return array;
   }
 };
+ */

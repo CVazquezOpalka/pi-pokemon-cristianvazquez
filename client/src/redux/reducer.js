@@ -6,15 +6,18 @@ import {
   SORT_ORDER,
   FILTER_TYPES,
   UPDATE_POKEMON,
+  UPDATE_TYPE,
+  UPDATE_ORDER,
+  UPDATE_POKEMONS,
 } from "./actions";
 
 const initialState = {
   types: [],
   pokemons: [],
-  pokemonFiltered: [],
   pokemon: {},
   isLoading: true,
-  type:"",
+  type: "",
+  order: "",
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -31,6 +34,11 @@ export const rootReducer = (state = initialState, action) => {
         pokemons: action.payload,
         isLoading: false,
       };
+    case UPDATE_POKEMONS:
+      return {
+        ...state,
+        pokemons: action.payload,
+      };
     case GET_POKEMON:
       return {
         ...state,
@@ -41,7 +49,6 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         pokemon: action.payload,
-        isLoading: true,
       };
     case SEARCH_POKEMON:
       return {
@@ -53,6 +60,21 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         type: action.payload,
+      };
+    case UPDATE_TYPE:
+      return {
+        ...state,
+        type: action.payload,
+      };
+    case SORT_ORDER:
+      return {
+        ...state,
+        order: action.payload,
+      };
+    case UPDATE_ORDER:
+      return {
+        ...state,
+        order: action.payload,
       };
     default:
       return state;
