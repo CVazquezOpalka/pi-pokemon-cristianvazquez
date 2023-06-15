@@ -1,44 +1,13 @@
-export const tipos = (type, array) => {
-  if (array.length && type) return array.filter((p) => p.tipos.includes(type));
-  else return [];
-};
-
-export const sortOrder = (order, array) => {
-  let nombres = array.map((e) => e.name);
-  let fuerza = array.map((e) => e.fuerza);
-
-  const sortPorNombre = (array, getter, order = "asc") => {
-    array.sort((a, b) => {
-      const first = getter(a);
-      const second = getter(b);
-      const compare = first.localeCompare(second);
-      return order === "asc" ? compare : -compare;
-    });
-    return array;
-  };
-
-  switch (order) {
-    case "a-z":
-      return sortPorNombre(nombres, (nombres) => nombres.name);
-    case "z-a":
-      return sortPorNombre(nombres, (nombres) => nombres.name).reverse();
-    case "fuerza+":
-      return fuerza.sort((a, b) => b - a);
-    case "fuerza-":
-      return fuerza.sort((a, b) => a - b);
-    default:
-      return array;
-  }
-};
-/* 
-export const tipos = (type, array) => {
-  if (array.length) return array.filter((p) => p.type.includes(type));
+export let tipos = (type, array) => {
+  if (array.length) return array.filter((p) => p.tipos.includes(type));
   return [];
 };
 
 export const ordered = (order, array) => {
   let names = array.map((o) => o.name);
   let fuerza = array.map((o) => o.fuerza);
+  let api = array.filter((e) => e.createdBDD !== true);
+  let bdd = array.filter((e) => e.createdBDD === true);
   let orde = [];
 
   switch (order) {
@@ -58,7 +27,7 @@ export const ordered = (order, array) => {
         });
       });
       return orde;
-    case "fuerza+":
+    case "ataque+":
       fuerza = fuerza.sort((a, b) => b - a);
       fuerza.forEach((f) => {
         array.forEach((p) => {
@@ -67,7 +36,7 @@ export const ordered = (order, array) => {
       });
       orde = orde.filter((e, i) => orde.indexOf(e) === i);
       return orde;
-    case "fuerza-":
+    case "ataque-":
       fuerza = fuerza.sort((a, b) => a - b);
       fuerza.forEach((f) => {
         array.forEach((p) => {
@@ -76,8 +45,11 @@ export const ordered = (order, array) => {
       });
       orde = orde.filter((e, i) => orde.indexOf(e) === i);
       return orde;
+    case "createdBDD":
+      return bdd;
+    case "api":
+      return api
     default:
       return array;
   }
 };
- */

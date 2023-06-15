@@ -7,16 +7,25 @@ import {
   CardContext,
 } from "../components/index";
 import { useSelector, useDispatch } from "react-redux";
-import { filterTypes, getPokemons, updateType } from "../redux/actions";
-import { tipos } from "../assets/utils/utils.js";
+import {
+  filterTypes,
+  updateType,
+  updateOrder,
+  sortOrder,
+} from "../redux/actions";
+import { tipos, ordered } from "../assets/utils/utils.js";
 
 export const HomePage = () => {
   /* ESTADOS GENERALES */
+  const dispatch = useDispatch();
   const typeState = useSelector((state) => state.types);
-  const pokemonState = useSelector((state) => state.pokemons);
+  let pokemonState = useSelector((state) => state.pokemons);
   const type = useSelector((state) => state.type);
   const order = useSelector((state) => state.order);
-  const dispatch = useDispatch();
+
+  //FILTROS
+  if (type) pokemonState = tipos(type, pokemonState);
+  if (order) pokemonState = ordered(order, pokemonState);
   //ESTADOS GENERALES, MANEJAN LA ACCION DEL TOOGLE, EL PAGINADO Y EL FILTRO DE TIPOS
   //controla el toogle de la barra de filtros
   const [show, setShow] = useState(false);
@@ -45,6 +54,14 @@ export const HomePage = () => {
     fairy: false,
     shadow: false,
   });
+  const [ordenar, setOrdenar] = useState({
+    "a-z": false,
+    "z-a": false,
+    "fuerza+": false,
+    "fuerza-": false,
+    createdBDD: false,
+    api: false,
+  });
   /* FUNCIONES DE FILTROS */
   const handleCheckbox = (e) => {
     setTypes({
@@ -57,18 +74,17 @@ export const HomePage = () => {
       dispatch(updateType(""));
     }
   };
-
-  //aaray de trabajo para filtros;
-  const pokeFilterPagination = tipos(type, pokemonState);
-  console.log(pokeFilterPagination);
-  /*  if (type) pokemonState = tipos(type, pokemonState);
-  if (order) pokemonState = sortOrder(order, pokemonState); */
-
-  /* FUNCIONES DE PAGINACION  */
-  //TOTAL DE PAGINAS
-  const totalPages = Math.ceil(pokemonState.length / 12);
-  //PAGINA ACTUAL
-  let currentPage = Math.ceil(page / pokemonState.length) + 1;
+  const handleOrder = (e) => {
+    setOrdenar({
+      ...ordenar,
+      [e.target.name]: e.target.checked,
+    });
+    if (e.target.checked) {
+      dispatch(sortOrder(e.target.value));
+    } else {
+      dispatch(updateOrder(""));
+    }
+  };
   //CORTE DEL ARRAY ESTADO GENERAL QUE GUARDA LOS POKEMONS
   const pagination = () => {
     if (pokemonState.length) return pokemonState.slice(page, page + 12);
@@ -76,7 +92,11 @@ export const HomePage = () => {
   };
   //ARRAY CON EL QUE TENGO QUE TRABAJAR
   const pokePagination = pagination();
-  //CONTROLADOR DE EVENTO NEXT
+  //TOTAL DE PAGINAS
+  const totalPages = Math.ceil(pokemonState.length / 12);
+  //PAGINA ACTUAL
+  let currentPage = Math.ceil(page / totalPages) + 1;
+  //CONTROLADOR DE EVENTO NE
   const onNextPage = () => {
     if (pokemonState.length > page + 12) {
       setPage(page + 12);
@@ -138,12 +158,28 @@ export const HomePage = () => {
           </div>
           <div className="other_filteres">
             <div className="checkbox">
-              <input type="checkbox" />
-              <label>Z - A</label>
+              <input type="checkbox"  name="z-a" value="z-a" onClick={handleOrder}/>
+              <label>z - a</label>
             </div>
             <div className="checkbox">
-              <input type="checkbox" />
-              <label>Por Ataque</label>
+              <input type="checkbox"  name="a-z" value="a-z" onClick={handleOrder}/>
+              <label htmlFor="">a - z</label>
+            </div>
+            <div className="checkbox">
+              <input type="checkbox"  name="ataque+" value="ataque+" onClick={handleOrder}/>
+              <label htmlFor="">ataque+</label>
+            </div>
+            <div className="checkbox">
+              <input type="checkbox"  name="ataque-" value="ataque-" onClick={handleOrder}/>
+              <label htmlFor="">ataque-</label>
+            </div>
+            <div className="checkbox">
+              <input type="checkbox"  name="createdBDD" value="createdBDD" onClick={handleOrder}/>
+              <label htmlFor="">BDD</label>
+            </div>
+            <div className="checkbox">
+              <input type="checkbox" name="api" value="api" onClick={handleOrder} />
+              <label htmlFor="">API</label>
             </div>
           </div>
         </div>
@@ -288,16 +324,18 @@ const Container = styled.div`
       }
       .other_filteres {
         margin-top: 10px;
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         align-items: center;
         justify-content: center;
+        gap: 20px;
         width: 100%;
         height: auto;
         .checkbox {
-          width: 80%;
+          width: 60%;
           height: 100%;
+          display: flex;
           align-items: center;
-          justify-content: center;
           margin-left: 30px;
           label {
             text-transform: capitalize;

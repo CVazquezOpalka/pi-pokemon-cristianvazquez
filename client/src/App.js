@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
@@ -9,14 +9,15 @@ import {
   Favorites,
 } from "./pages/index";
 import { getTypes, getPokemons } from "./redux/actions";
-import { Search } from "./pages/Search";
 
 function App() {
+  //logica del componente
   const dispatch = useDispatch();
-  useEffect(()=>{
+  //carga el estado inicial de tipos y los pokemones
+  useEffect(() => {
     dispatch(getTypes());
-    dispatch(getPokemons())
-  },[])
+    dispatch(getPokemons());
+  }, []);
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
@@ -24,7 +25,6 @@ function App() {
       <Route path="/createPokemon" element={<CreatePage />} />
       <Route path="/pokemon/:id" element={<DetailPage />} />
       <Route path="/favorites" element={<Favorites />} />
-      <Route path="/search" element={<Search />} />
     </Routes>
   );
 }

@@ -9,6 +9,7 @@ import {
   UPDATE_TYPE,
   UPDATE_ORDER,
   UPDATE_POKEMONS,
+  GET_POKEMON_FILTERS,
 } from "./actions";
 
 const initialState = {
@@ -45,6 +46,7 @@ export const rootReducer = (state = initialState, action) => {
         pokemon: action.payload,
         isLoading: false,
       };
+
     case UPDATE_POKEMON:
       return {
         ...state,

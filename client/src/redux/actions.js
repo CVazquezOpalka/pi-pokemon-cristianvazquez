@@ -4,18 +4,26 @@ export const CREATE_POKEMON = "CREATE_POKEMON";
 export const SEARCH_POKEMON = "SEARCH_POKEMON";
 export const GET_TYPES = "GET_TYPES";
 export const FILTER_TYPES = "FILTER_TYPES";
+export const GET_POKEMON_FILTERS = "GET_POKEMON_FILTERS";
 export const SORT_ORDER = "SORT_ORDER";
-export const UPDATE_POKEMONS = "UPDATE_POKEMONS"
+export const UPDATE_POKEMONS = "UPDATE_POKEMONS";
 export const UPDATE_POKEMON = "UPDATE_POKEMON";
 export const UPDATE_ORDER = "UPDATE_ORDER";
 export const UPDATE_TYPE = "UPDATE_TYPES";
 
-export const updatePokemons = (payload) =>{
+export const getPokemonFilter = (payload) => {
+  return {
+    type: GET_POKEMON_FILTERS,
+    payload,
+  };
+};
+
+export const updatePokemons = (payload) => {
   return {
     type: UPDATE_POKEMONS,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const updateType = (payload) => {
   return {
