@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { searchPokemon } from "../redux/actions";
+import { searchPokemons, updateSearch } from "../redux/actions";
 
 export const SearchBar = () => {
   const navigate = useNavigate();
@@ -16,10 +16,9 @@ export const SearchBar = () => {
   };
 
   const handleSubmit = () => {
-    if (typeof name == "string") dispatch(searchPokemon(name, false));
-    if (Number(name)) dispatch(searchPokemon(false, name));
-    setName("");
-    navigate("/search")
+    if (name) {
+      dispatch(searchPokemons(name));
+    }
   };
 
   return (

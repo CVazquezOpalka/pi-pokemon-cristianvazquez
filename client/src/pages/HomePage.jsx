@@ -13,7 +13,7 @@ import {
   updateOrder,
   sortOrder,
 } from "../redux/actions";
-import { tipos, ordered } from "../assets/utils/utils.js";
+import { tipos, ordered, buscar } from "../assets/utils/utils.js";
 
 export const HomePage = () => {
   /* ESTADOS GENERALES */
@@ -22,16 +22,18 @@ export const HomePage = () => {
   let pokemonState = useSelector((state) => state.pokemons);
   const type = useSelector((state) => state.type);
   const order = useSelector((state) => state.order);
-
+  const search = useSelector((state) => state.search);
+ 
   //FILTROS
   if (type) pokemonState = tipos(type, pokemonState);
   if (order) pokemonState = ordered(order, pokemonState);
+  if (search) pokemonState = buscar(search,pokemonState);
   //ESTADOS GENERALES, MANEJAN LA ACCION DEL TOOGLE, EL PAGINADO Y EL FILTRO DE TIPOS
   //controla el toogle de la barra de filtros
   const [show, setShow] = useState(false);
-  //controla el paginado // intntar realizar un custom hook
+
   const [page, setPage] = useState(0);
-  //contra el eventro de filtros del checkbox;
+
   const [types, setTypes] = useState({
     normal: false,
     flying: false,
@@ -158,27 +160,57 @@ export const HomePage = () => {
           </div>
           <div className="other_filteres">
             <div className="checkbox">
-              <input type="checkbox"  name="z-a" value="z-a" onClick={handleOrder}/>
+              <input
+                type="checkbox"
+                name="z-a"
+                value="z-a"
+                onClick={handleOrder}
+              />
               <label>z - a</label>
             </div>
             <div className="checkbox">
-              <input type="checkbox"  name="a-z" value="a-z" onClick={handleOrder}/>
+              <input
+                type="checkbox"
+                name="a-z"
+                value="a-z"
+                onClick={handleOrder}
+              />
               <label htmlFor="">a - z</label>
             </div>
             <div className="checkbox">
-              <input type="checkbox"  name="ataque+" value="ataque+" onClick={handleOrder}/>
+              <input
+                type="checkbox"
+                name="ataque+"
+                value="ataque+"
+                onClick={handleOrder}
+              />
               <label htmlFor="">ataque+</label>
             </div>
             <div className="checkbox">
-              <input type="checkbox"  name="ataque-" value="ataque-" onClick={handleOrder}/>
+              <input
+                type="checkbox"
+                name="ataque-"
+                value="ataque-"
+                onClick={handleOrder}
+              />
               <label htmlFor="">ataque-</label>
             </div>
             <div className="checkbox">
-              <input type="checkbox"  name="createdBDD" value="createdBDD" onClick={handleOrder}/>
+              <input
+                type="checkbox"
+                name="createdBDD"
+                value="createdBDD"
+                onClick={handleOrder}
+              />
               <label htmlFor="">BDD</label>
             </div>
             <div className="checkbox">
-              <input type="checkbox" name="api" value="api" onClick={handleOrder} />
+              <input
+                type="checkbox"
+                name="api"
+                value="api"
+                onClick={handleOrder}
+              />
               <label htmlFor="">API</label>
             </div>
           </div>

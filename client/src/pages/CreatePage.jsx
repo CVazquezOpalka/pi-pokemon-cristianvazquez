@@ -1,56 +1,32 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import { useSelector} from "react-redux";
-
+import { PokeForm } from "../components/PokemonForm";
+import Image from "../assets/image/fondo.jpeg";
+import { BTNGoBack } from "../assets/styles/style";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 export const CreatePage = () => {
-  const typeState = useSelector((state) => state.types);
- 
-
+  const navigate = useNavigate();
   return (
     <Container>
+      <img src={Image} alt="" className="background" />
       <div className="container_form">
-        <div className="title_form">
-          <h1>Crea a tu propio pokemon y atrapalos a todos</h1>
+        <div className="btn_goback">
+          <BTNGoBack
+            border={true.toString()}
+            color={true.toString()}
+            onClick={() => navigate("/home")}
+          >
+            <AiOutlineArrowLeft />
+          </BTNGoBack>
         </div>
-        <form >
-          <div className="name">
-            <input type="text" placeholder="ingrese un nombre" />
-          </div>
-          <div className="vida">
-            <label htmlFor="">Vida:</label>
-            <input type="number" />
-          </div>
-          <div className="fuerza">
-            <label htmlFor="">Fuerza:</label>
-            <input type="number" />
-          </div>
-          <div className="defensa">
-            <label htmlFor="">Defensa:</label>
-            <input type="number" />
-          </div>
-          <div className="velocidad">
-            <label htmlFor="">Velocidad:</label>
-            <input type="number" />
-          </div>
-          <div className="peso">
-            <label htmlFor="">Peso:</label>
-            <input type="number" />
-          </div>
-          <div className="altura">
-            <label htmlFor="">Altura:</label>
-            <input type="number" />
-          </div>
-          <div className="tipos">
-            <>
-              {typeState?.map((e) => (<div className="checkbox" key={e.id}>
-                  <label>{e.name}</label>
-                  <input type="checkbox" />
-                </div>)
-              )}
-              </>
-          </div>
-        </form>
+        <div className="title_form">
+          <h1>Crea a tu propio pokemon</h1>
+        </div>
+        <div className="form">
+          <PokeForm />
+        </div>
       </div>
     </Container>
   );
@@ -62,16 +38,36 @@ const Container = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+  }
 
   .container_form {
-    width: 80%;
+    width: 100%;
     height: 100%;
-    margin: 0 auto;
-    background-color: green;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
     display: flex;
     flex-direction: column;
+    position: relative;
+    .btn_goback {
+      position: absolute;
+      top: 35px;
+      left: 25px;
+      width: 50px;
+      height: 50px;
+    }
     .title_form {
-      background-color: red;
+      margin-top: 30px;
+      margin-bottom: 15px;
       width: 100%;
       height: 50px;
       display: flex;
@@ -81,10 +77,20 @@ const Container = styled.main`
         width: 100%;
         height: auto;
         text-align: center;
+        color: #fff;
         text-transform: uppercase;
         letter-spacing: 1px;
         text-decoration: underline;
       }
+    }
+    .form {
+      border-radius: 30px;
+      overflow: hidden;
+      width: 80%;
+      height: auto;
+      margin: 0 auto;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
     }
   }
 `;

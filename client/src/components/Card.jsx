@@ -36,7 +36,7 @@ export const Card = ({ pokemon }) => {
 };
 
 const Container = styled.div`
-  width: 200px;
+  width: 230px;
   height: 300px;
   margin: 0 auto;
   display: flex;

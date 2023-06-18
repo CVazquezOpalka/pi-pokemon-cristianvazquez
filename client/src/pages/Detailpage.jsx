@@ -6,6 +6,7 @@ import { getPokemon, updatePokemon } from "../redux/actions";
 import { Loader } from "../components/Loader";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { BTNGoBack } from "../assets/styles/style";
 
 export const DetailPage = () => {
   const pokemonState = useSelector((state) => state.pokemon);
@@ -26,9 +27,9 @@ export const DetailPage = () => {
       ) : (
         <>
           <div className="btn_goback">
-            <button onClick={() => navigate(-1)}>
+            <BTNGoBack onClick={() => navigate(-1)}>
               <AiOutlineArrowLeft />
-            </button>
+            </BTNGoBack>
           </div>
           <div className="pokemon_detail_page">
             <div className="page_top">

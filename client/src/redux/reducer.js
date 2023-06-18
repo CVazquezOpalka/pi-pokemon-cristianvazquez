@@ -9,7 +9,7 @@ import {
   UPDATE_TYPE,
   UPDATE_ORDER,
   UPDATE_POKEMONS,
-  GET_POKEMON_FILTERS,
+  UPDATE_SEARCH,
 } from "./actions";
 
 const initialState = {
@@ -19,6 +19,7 @@ const initialState = {
   isLoading: true,
   type: "",
   order: "",
+  search: "",
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -46,7 +47,6 @@ export const rootReducer = (state = initialState, action) => {
         pokemon: action.payload,
         isLoading: false,
       };
-
     case UPDATE_POKEMON:
       return {
         ...state,
@@ -55,8 +55,12 @@ export const rootReducer = (state = initialState, action) => {
     case SEARCH_POKEMON:
       return {
         ...state,
-        pokemons: action.payload,
-        isLoading: false,
+        search: action.payload,
+      };
+    case UPDATE_SEARCH:
+      return {
+        ...state,
+        search: action.payload,
       };
     case FILTER_TYPES:
       return {

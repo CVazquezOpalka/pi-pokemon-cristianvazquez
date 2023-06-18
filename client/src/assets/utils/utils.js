@@ -1,3 +1,8 @@
+export let buscar = (name, array) => {
+  if (array.length) return array.filter((e) => e.name === name);
+  return [];
+};
+
 export let tipos = (type, array) => {
   if (array.length) return array.filter((p) => p.tipos.includes(type));
   return [];
@@ -6,8 +11,8 @@ export let tipos = (type, array) => {
 export const ordered = (order, array) => {
   let names = array.map((o) => o.name);
   let fuerza = array.map((o) => o.fuerza);
-  let api = array.filter((e) => e.createdBDD !== true);
-  let bdd = array.filter((e) => e.createdBDD === true);
+  let api = array.filter((e) => e.createdDBB !== true);
+  let bdd = array.filter((e) => e.createdDBB === true);
   let orde = [];
 
   switch (order) {
@@ -48,7 +53,7 @@ export const ordered = (order, array) => {
     case "createdBDD":
       return bdd;
     case "api":
-      return api
+      return api;
     default:
       return array;
   }

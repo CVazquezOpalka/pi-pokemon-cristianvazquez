@@ -4,19 +4,19 @@ export const CREATE_POKEMON = "CREATE_POKEMON";
 export const SEARCH_POKEMON = "SEARCH_POKEMON";
 export const GET_TYPES = "GET_TYPES";
 export const FILTER_TYPES = "FILTER_TYPES";
-export const GET_POKEMON_FILTERS = "GET_POKEMON_FILTERS";
 export const SORT_ORDER = "SORT_ORDER";
 export const UPDATE_POKEMONS = "UPDATE_POKEMONS";
 export const UPDATE_POKEMON = "UPDATE_POKEMON";
 export const UPDATE_ORDER = "UPDATE_ORDER";
 export const UPDATE_TYPE = "UPDATE_TYPES";
+export const UPDATE_SEARCH = "UPDATE_SEARCH"
 
-export const getPokemonFilter = (payload) => {
-  return {
-    type: GET_POKEMON_FILTERS,
-    payload,
-  };
-};
+export const updateSearch =(payload)=>{
+  return{
+    type: UPDATE_SEARCH,
+    payload
+  }
+}
 
 export const updatePokemons = (payload) => {
   return {
@@ -78,29 +78,11 @@ export function getPokemon(id) {
   };
 }
 
-export function searchPokemon(name, id) {
-  return function (dispatch) {
-    if (name && typeof name === "string") {
-      return fetch(`http://localhost:3001/pokemons/?name=${name}`)
-        .then((res) => res.json())
-        .then((json) =>
-          dispatch({
-            type: SEARCH_POKEMON,
-            payload: json,
-          })
-        );
-    }
-    if (id && typeof id === "number") {
-      return fetch(`http://localhost:3001/pokemons/${id}`)
-        .then((res) => res.json())
-        .then((json) =>
-          dispatch({
-            type: SEARCH_POKEMON,
-            payload: json,
-          })
-        );
-    }
-  };
+export const searchPokemons =(payload)=>{
+  return{
+    type: SEARCH_POKEMON,
+    payload,
+  }
 }
 
 export function filterTypes(type) {
