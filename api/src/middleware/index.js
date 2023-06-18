@@ -13,6 +13,7 @@ const info = async (name, id) => {
       "velocidad",
       "peso",
       "altura",
+      "createdDBB",
     ],
     include: [
       {
@@ -21,6 +22,22 @@ const info = async (name, id) => {
         through: { attributes: [] },
       },
     ],
+  });
+  const result = [];
+  pokesBDD.forEach((e) => {
+    result.push({
+      id: e.id,
+      name: e.name,
+      image: e.image,
+      vida: e.vida,
+      fuerza: e.fuerza,
+      defensa: e.defensa,
+      velocidad: e.velocidad,
+      peso: e.peso,
+      altura: e.altura,
+      createdDBB: e.createdDBB,
+      tipos: e.tipos.map((e) => e.name),
+    });
   });
   const URL = "https://pokeapi.co/api/v2/pokemon?limit=150";
   const { data } = await axios.get(URL);
@@ -44,10 +61,11 @@ const info = async (name, id) => {
       fuerza: e.stats[1].base_stat,
       defensa: e.stats[2].base_stat,
       velocidad: e.stats[5].base_stat,
+      createdDBB: false,
     });
   });
 
-  pokeArr = [...pokesBDD, ...pokeArr];
+  pokeArr = [...result, ...pokeArr];
   if (name) {
     const findPoke = pokeArr.find((e) => e.name == name);
     return findPoke;

@@ -39,6 +39,9 @@ module.exports = (sequelize) => {
       image: {
         type: DataTypes.STRING,
       },
+      createdDBB: {
+        type: DataTypes.BOOLEAN,
+      },
     },
     {
       timestamps: false,
