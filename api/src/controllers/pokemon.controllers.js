@@ -39,7 +39,7 @@ const createPokemons = async (req, res) => {
 
   try {
     const pokeArr = await info();
-    const maxId = Math.max(...pokeArr.map((e) => e.id));  
+    const maxId = Math.max(...pokeArr.map((e) => e.id));
     const id = maxId + 1;
     const findPoke = await Pokemon.findOne({ where: { name } });
     if (!name) {
@@ -79,7 +79,7 @@ const createPokemons = async (req, res) => {
       peso: Number(peso),
       createdDBB: true,
     });
-    if (!tipos.length) tipos = ["normal"];
+    if (!tipos.length) tipos = [1];
 
     await newPokemon.setTipos(tipos);
     res.status(200).json(newPokemon);
