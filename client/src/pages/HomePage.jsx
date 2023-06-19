@@ -22,12 +22,11 @@ export const HomePage = () => {
   let pokemonState = useSelector((state) => state.pokemons);
   const type = useSelector((state) => state.type);
   const order = useSelector((state) => state.order);
-  const search = useSelector((state) => state.search);
- 
+
   //FILTROS
   if (type) pokemonState = tipos(type, pokemonState);
   if (order) pokemonState = ordered(order, pokemonState);
-  if (search) pokemonState = buscar(search,pokemonState);
+
   //ESTADOS GENERALES, MANEJAN LA ACCION DEL TOOGLE, EL PAGINADO Y EL FILTRO DE TIPOS
   //controla el toogle de la barra de filtros
   const [show, setShow] = useState(false);
@@ -90,14 +89,17 @@ export const HomePage = () => {
   //CORTE DEL ARRAY ESTADO GENERAL QUE GUARDA LOS POKEMONS
   const pagination = () => {
     if (pokemonState.length) return pokemonState.slice(page, page + 12);
+    if (pokemonState.id) return pokemonState;
     return [];
   };
   //ARRAY CON EL QUE TENGO QUE TRABAJAR
   const pokePagination = pagination();
   //TOTAL DE PAGINAS
-  const totalPages = Math.ceil(pokemonState.length / 12);
+  const totalPages = pokemonState.length
+    ? Math.ceil(pokemonState.length / 12)
+    : null;
   //PAGINA ACTUAL
-  let currentPage = Math.ceil(page / totalPages) + 1;
+  let currentPage = totalPages ? Math.ceil(page / totalPages) + 1 : null;
   //CONTROLADOR DE EVENTO NE
   const onNextPage = () => {
     if (pokemonState.length > page + 12) {

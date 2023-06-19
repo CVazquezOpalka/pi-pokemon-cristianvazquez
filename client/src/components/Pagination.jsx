@@ -15,7 +15,7 @@ export const Pagination = ({ totalPages, onPrev, onNext, pages }) => {
             </BotonRedondo>
           ) : null}
           <h3>
-            <span>{pages}</span> de <span>{totalPages}</span>
+            <span>{pages}</span> - <span>{totalPages}</span>
           </h3>
           {pages === totalPages ? null : (
             <BotonRedondo onClick={onNext}>

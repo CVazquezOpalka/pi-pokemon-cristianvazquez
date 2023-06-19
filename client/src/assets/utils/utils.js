@@ -1,7 +1,3 @@
-export let buscar = (name, array) => {
-  if (array.length) return array.filter((e) => e.name === name);
-  return [];
-};
 
 export let tipos = (type, array) => {
   if (array.length) return array.filter((p) => p.tipos.includes(type));

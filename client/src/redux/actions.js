@@ -9,18 +9,26 @@ export const UPDATE_POKEMONS = "UPDATE_POKEMONS";
 export const UPDATE_POKEMON = "UPDATE_POKEMON";
 export const UPDATE_ORDER = "UPDATE_ORDER";
 export const UPDATE_TYPE = "UPDATE_TYPES";
-export const UPDATE_SEARCH = "UPDATE_SEARCH"
+export const UPDATE_SEARCH = "UPDATE_SEARCH";
 
-export const updateSearch =(payload)=>{
-  return{
+//FUNCIONES DE LIMPIEZA
+
+export const updateSearch = (payload) => {
+  return {
     type: UPDATE_SEARCH,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const updatePokemons = (payload) => {
   return {
     type: UPDATE_POKEMONS,
+    payload,
+  };
+};
+export const updatePokemon = (payload) => {
+  return {
+    type: UPDATE_POKEMON,
     payload,
   };
 };
@@ -38,6 +46,8 @@ export const updateOrder = (payload) => {
     payload,
   };
 };
+
+//LLAMADOS A LA API
 
 export function getTypes() {
   return function (dispatch) {
@@ -78,11 +88,17 @@ export function getPokemon(id) {
   };
 }
 
-export const searchPokemons =(payload)=>{
-  return{
-    type: SEARCH_POKEMON,
-    payload,
-  }
+export function searchPokemon(name) {
+  return function (dispatch) {
+    return fetch(`http://localhost:3001/pokemons?name=${name}`)
+      .then((response) => response.json())
+      .then((json) =>
+        dispatch({
+          type: SEARCH_POKEMON,
+          payload: json,
+        })
+      );
+  };
 }
 
 export function filterTypes(type) {
@@ -100,12 +116,5 @@ export function sortOrder(order) {
       type: SORT_ORDER,
       payload: order,
     });
-  };
-}
-
-export function updatePokemon(payload) {
-  return {
-    type: UPDATE_POKEMON,
-    payload,
   };
 }

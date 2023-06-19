@@ -19,7 +19,6 @@ const initialState = {
   isLoading: true,
   type: "",
   order: "",
-  search: "",
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -55,7 +54,8 @@ export const rootReducer = (state = initialState, action) => {
     case SEARCH_POKEMON:
       return {
         ...state,
-        search: action.payload,
+        pokemons: action.payload,
+        isLoading: false,
       };
     case UPDATE_SEARCH:
       return {

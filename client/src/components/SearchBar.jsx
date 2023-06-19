@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { searchPokemons, updateSearch } from "../redux/actions";
+import { searchPokemon, updatePokemons } from "../redux/actions";
 
 export const SearchBar = () => {
   const navigate = useNavigate();
@@ -15,11 +15,17 @@ export const SearchBar = () => {
     setName(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     if (name) {
-      dispatch(searchPokemons(name));
+      dispatch(searchPokemon(name))
     }
+    setName("")
   };
+
+useEffect(()=>{
+    return ()=> dispatch(updatePokemons())
+  },[]) 
 
   return (
     <Container onSubmit={handleSubmit}>
