@@ -95,16 +95,17 @@ export const HomePage = () => {
   const pokePagination = pagination();
   //TOTAL DE PAGINAS
   const totalPages = pokemonState.length
-    ? Math.ceil(pokemonState.length / 12)
+    ? Math.floor(pokemonState.length / 12)
     : null;
   //PAGINA ACTUAL
   let currentPage = totalPages ? Math.ceil(page / totalPages) + 1 : null;
-  //CONTROLADOR DE EVENTO NE
+  //CONTROLADOR DEL EVENTO NEXT
   const onNextPage = () => {
     if (pokemonState.length > page + 12) {
-      setPage(Math.min(page + 12));
+      setPage(page + 12);
     }
   };
+  console.log(pokemonState.length)
   //CONTROLADOR DE EVENTO PREV
   const onPreviusPage = () => {
     if (page > 0) {
@@ -125,6 +126,7 @@ export const HomePage = () => {
               pages={currentPage}
               onPrev={onPreviusPage}
               onNext={onNextPage}
+              type={type}
             />
           </div>
         </div>

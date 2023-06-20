@@ -11,6 +11,7 @@ export const CardContext = ({ pokePagination, state }) => {
   const loading = useSelector((state) => state.isLoading);
   //el state pokemons es pasado por props, cuando se realiza una busqueda en la searchbar, carga el nuevo estado
   const dispatch = useDispatch();
+
   const handleClick = () => {
     dispatch(getPokemons());
   };
@@ -28,11 +29,7 @@ export const CardContext = ({ pokePagination, state }) => {
               <AiOutlineArrowLeft />
             </BTNGoBack>
           </div>
-          {loading ? (
-            <Loader />
-          ) : (
-            <Card pokemon={state} key={pokePagination.id} />
-          )}
+            <Card pokemon={state} alter/>
         </Container>
       ) : (
         <Container>

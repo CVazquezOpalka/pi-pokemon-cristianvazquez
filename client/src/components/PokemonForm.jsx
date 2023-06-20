@@ -5,9 +5,11 @@ import { getPokemons } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 export const PokeForm = () => {
+  //logica del componente
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const option = useSelector((state) => state.types);
+  //imagenes que se renderizan al costadoen forma de una targeta de presentacion
   const image1 =
     "https://raw.githubusercontent.com/MartaFagundez/pokedex-frontend/main/src/images/pk1.png";
   const image2 =
@@ -22,7 +24,6 @@ export const PokeForm = () => {
   const [mostrarImagen, setMostrarImagen] = useState(
     "https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_640.png"
   );
-
   const [selectTipo1, setSelectTipo1] = useState(null);
   const [selectTipo2, setSelectTipo2] = useState(null);
 
@@ -43,7 +44,7 @@ export const PokeForm = () => {
   const validar = (input) => {
     let errors = {};
     if (!input.name) {
-      errors.n1 = "El name es obligatorio";
+      errors.n1 = "El nombre del pokemon es obligatorio";
     }
     if (input.name.length > 15) {
       errors.n2 = "El nombre no debe ser mayor de 15 caracteres";
@@ -108,7 +109,7 @@ export const PokeForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (errors) alert("Debe ingresar los datos correspondientes");
+    if (errors.n1 || errors.n2 || errors.t) alert("Debe ingresar los datos correspondientes");
     const crear = await fetch("http://localhost:3001/pokemons", {
       method: "POST",
       headers: {
@@ -432,7 +433,7 @@ const Container = styled.div`
         text-transform: uppercase;
       }
       .danger_n1 {
-        left: 410px;
+        left: 345px;
       }
       .danger_t {
         position: absolute;
