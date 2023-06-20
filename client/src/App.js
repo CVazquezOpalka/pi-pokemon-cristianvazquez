@@ -8,7 +8,7 @@ import {
   DetailPage,
   Favorites,
 } from "./pages/index";
-import { getTypes, getPokemons } from "./redux/actions";
+import { getTypes, getPokemons} from "./redux/actions";
 
 function App() {
   //logica del componente

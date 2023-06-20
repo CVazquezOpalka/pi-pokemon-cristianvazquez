@@ -4,7 +4,6 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { BotonRedondo } from "../assets/styles/style";
 
 export const Pagination = ({ totalPages, onPrev, onNext, pages }) => {
-  
   return (
     <>
       {totalPages === 0 ? null : (
@@ -15,7 +14,8 @@ export const Pagination = ({ totalPages, onPrev, onNext, pages }) => {
             </BotonRedondo>
           ) : null}
           <h3>
-            <span>{pages}</span> - <span>{totalPages}</span>
+            <span>{pages > totalPages ? Math.ceil(pages / totalPages) : pages}</span> -{" "}
+            <span>{totalPages}</span>
           </h3>
           {pages === totalPages ? null : (
             <BotonRedondo onClick={onNext}>

@@ -108,7 +108,7 @@ export const PokeForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (errors) alert("Debe ingresar los datos correspondientes");
     const crear = await fetch("http://localhost:3001/pokemons", {
       method: "POST",
       headers: {
@@ -131,7 +131,6 @@ export const PokeForm = () => {
     alert("pokemon creado con exito");
     navigate(-1);
   };
-  console.log(errors);
   return (
     <Container>
       <div className="card_container">
@@ -421,7 +420,8 @@ const Container = styled.div`
       align-items: flex-start;
       gap: 20px;
       justify-content: space-around;
-      .danger_n2,.danger_n1 {
+      .danger_n2,
+      .danger_n1 {
         position: absolute;
         top: 70px;
         left: 310px;
@@ -431,10 +431,10 @@ const Container = styled.div`
         font-weight: 500;
         text-transform: uppercase;
       }
-      .danger_n1{
-        left: 410px
+      .danger_n1 {
+        left: 410px;
       }
-      .danger_t{
+      .danger_t {
         position: absolute;
         top: 140px;
         left: 390px;

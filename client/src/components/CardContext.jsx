@@ -6,10 +6,11 @@ import { BTNGoBack } from "../assets/styles/style";
 import { getPokemons } from "../redux/actions";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
-export const CardContext = ({ pokePagination }) => {
+export const CardContext = ({ pokePagination, state }) => {
+  //logica de componente
   const loading = useSelector((state) => state.isLoading);
+  //el state pokemons es pasado por props, cuando se realiza una busqueda en la searchbar, carga el nuevo estado
   const dispatch = useDispatch();
-
   const handleClick = () => {
     dispatch(getPokemons());
   };
@@ -20,20 +21,26 @@ export const CardContext = ({ pokePagination }) => {
         <ContainerLoader>
           <Loader />
         </ContainerLoader>
-      ) : pokePagination.id ? (
+      ) : state.id ? (
         <Container alter>
           <div className="btn_goback">
             <BTNGoBack onClick={() => handleClick()}>
               <AiOutlineArrowLeft />
             </BTNGoBack>
           </div>
-          <Card pokemon={pokePagination} key={pokePagination.id} />
+          {loading ? (
+            <Loader />
+          ) : (
+            <Card pokemon={state} key={pokePagination.id} />
+          )}
         </Container>
       ) : (
         <Container>
-          {pokePagination.map((e) => (
-            <Card pokemon={e} key={e.id} />
-          ))}
+          {loading ? (
+            <Loader />
+          ) : (
+            pokePagination.map((e) => <Card pokemon={e} key={e.id} />)
+          )}
         </Container>
       )}
     </>

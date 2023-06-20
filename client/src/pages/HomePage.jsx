@@ -13,7 +13,7 @@ import {
   updateOrder,
   sortOrder,
 } from "../redux/actions";
-import { tipos, ordered, buscar } from "../assets/utils/utils.js";
+import { tipos, ordered } from "../assets/utils/utils.js";
 
 export const HomePage = () => {
   /* ESTADOS GENERALES */
@@ -89,7 +89,6 @@ export const HomePage = () => {
   //CORTE DEL ARRAY ESTADO GENERAL QUE GUARDA LOS POKEMONS
   const pagination = () => {
     if (pokemonState.length) return pokemonState.slice(page, page + 12);
-    if (pokemonState.id) return pokemonState;
     return [];
   };
   //ARRAY CON EL QUE TENGO QUE TRABAJAR
@@ -103,7 +102,7 @@ export const HomePage = () => {
   //CONTROLADOR DE EVENTO NE
   const onNextPage = () => {
     if (pokemonState.length > page + 12) {
-      setPage(page + 12);
+      setPage(Math.min(page + 12));
     }
   };
   //CONTROLADOR DE EVENTO PREV
@@ -219,7 +218,7 @@ export const HomePage = () => {
         </div>
       </div>
       <div className="card_context">
-        <CardContext pokePagination={pokePagination} />
+        <CardContext pokePagination={pokePagination} state={pokemonState} />
       </div>
     </Container>
   );

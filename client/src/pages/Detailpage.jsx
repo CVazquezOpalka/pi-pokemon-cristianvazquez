@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemon, updatePokemon } from "../redux/actions";
+import { getPokemon, updatePokemon, getPokemons } from "../redux/actions";
 import { Loader } from "../components/Loader";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
@@ -14,10 +14,16 @@ export const DetailPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const handleClick = () => {
+    dispatch(getPokemons());
+    navigate("/home");
+  };
+
   useEffect(() => {
     dispatch(getPokemon(id));
     return () => dispatch(updatePokemon({}));
   }, []);
+
   return (
     <Container>
       {pokemonState.id === undefined ? (
@@ -27,7 +33,7 @@ export const DetailPage = () => {
       ) : (
         <>
           <div className="btn_goback">
-            <BTNGoBack onClick={() => navigate(-1)}>
+            <BTNGoBack onClick={() => handleClick()}>
               <AiOutlineArrowLeft />
             </BTNGoBack>
           </div>
