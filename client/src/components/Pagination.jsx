@@ -4,6 +4,7 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { BotonRedondo } from "../assets/styles/style";
 
 export const Pagination = ({ totalPages, onPrev, onNext, pages, type }) => {
+ 
   return (
     <>
       {totalPages === 0 ? null : (

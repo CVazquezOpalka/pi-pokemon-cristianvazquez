@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { searchPokemon} from "../redux/actions";
 
 export const SearchBar = () => {
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const [name, setName] = useState("");
 
@@ -27,7 +26,7 @@ export const SearchBar = () => {
     <Container onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Busca a tu pokemon por nombre o id.."
+        placeholder="Busca a tu pokemon por nombre..."
         onChange={handleChange}
       />
       <button>

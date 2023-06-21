@@ -30,7 +30,6 @@ export const HomePage = () => {
   //ESTADOS GENERALES, MANEJAN LA ACCION DEL TOOGLE, EL PAGINADO Y EL FILTRO DE TIPOS
   //controla el toogle de la barra de filtros
   const [show, setShow] = useState(false);
-
   const [page, setPage] = useState(0);
 
   const [types, setTypes] = useState({
@@ -105,7 +104,7 @@ export const HomePage = () => {
       setPage(page + 12);
     }
   };
-  console.log(pokemonState.length)
+  console.log(pokemonState.length);
   //CONTROLADOR DE EVENTO PREV
   const onPreviusPage = () => {
     if (page > 0) {

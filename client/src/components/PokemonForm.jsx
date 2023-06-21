@@ -109,7 +109,7 @@ export const PokeForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (errors.n1 || errors.n2 || errors.t) alert("Debe ingresar los datos correspondientes");
+
     const crear = await fetch("http://localhost:3001/pokemons", {
       method: "POST",
       headers: {
@@ -118,6 +118,7 @@ export const PokeForm = () => {
       },
       body: JSON.stringify(data),
     });
+
     dispatch(getPokemons());
     setData({
       name: "",
@@ -129,8 +130,12 @@ export const PokeForm = () => {
       peso: 0,
       tipos: [],
     });
-    alert("pokemon creado con exito");
-    navigate(-1);
+    if (crear.status === 400) {
+      alert(`ya existe el pokemon con el nombre ${data.name.toLowerCase()}`);
+    } else {
+      alert("pokemon creado con exito");
+      navigate(-1);
+    }
   };
   return (
     <Container>
