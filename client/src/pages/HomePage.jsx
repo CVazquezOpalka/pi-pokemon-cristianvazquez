@@ -9,11 +9,11 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import {
   filterTypes,
-  updateType,
   updateOrder,
   sortOrder,
+  updateType,
 } from "../redux/actions";
-import { tipos, ordered } from "../assets/utils/utils.js";
+import { ordered, tipos } from "../assets/utils/utils.js";
 
 export const HomePage = () => {
   /* ESTADOS GENERALES */
@@ -24,14 +24,13 @@ export const HomePage = () => {
   const order = useSelector((state) => state.order);
 
   //FILTROS
-  if (type) pokemonState = tipos(type, pokemonState);
   if (order) pokemonState = ordered(order, pokemonState);
+  if (type) pokemonState = tipos(type, pokemonState);
 
   //ESTADOS GENERALES, MANEJAN LA ACCION DEL TOOGLE, EL PAGINADO Y EL FILTRO DE TIPOS
   //controla el toogle de la barra de filtros
   const [show, setShow] = useState(false);
-  const [page, setPage] = useState(0);
-
+  //controlador de filtros por tipo
   const [types, setTypes] = useState({
     normal: false,
     flying: false,
@@ -62,7 +61,7 @@ export const HomePage = () => {
     createdBDD: false,
     api: false,
   });
-  /* FUNCIONES DE FILTROS */
+  // funciones de filtros
   const handleCheckbox = (e) => {
     setTypes({
       ...types,
@@ -70,6 +69,7 @@ export const HomePage = () => {
     });
     if (e.target.checked) {
       dispatch(filterTypes(e.target.name));
+      setPage(0);
     } else {
       dispatch(updateType(""));
     }
@@ -85,32 +85,31 @@ export const HomePage = () => {
       dispatch(updateOrder(""));
     }
   };
-  //CORTE DEL ARRAY ESTADO GENERAL QUE GUARDA LOS POKEMONS
+  //funciones de pagiado
+  const [page, setPage] = useState(0);
   const pagination = () => {
     if (pokemonState.length) return pokemonState.slice(page, page + 12);
     return [];
   };
-  //ARRAY CON EL QUE TENGO QUE TRABAJAR
   const pokePagination = pagination();
-  //TOTAL DE PAGINAS
   const totalPages = pokemonState.length
     ? Math.floor(pokemonState.length / 12)
     : null;
-  //PAGINA ACTUAL
-  let currentPage = totalPages ? Math.ceil(page / totalPages) + 1 : null;
-  //CONTROLADOR DEL EVENTO NEXT
+  let currentPage =
+    totalPages === 12
+      ? Math.ceil(page / totalPages) + 1
+      : Math.ceil(page / pokemonState.length) + 1;
   const onNextPage = () => {
     if (pokemonState.length > page + 12) {
       setPage(page + 12);
     }
   };
-  console.log(pokemonState.length);
-  //CONTROLADOR DE EVENTO PREV
   const onPreviusPage = () => {
     if (page > 0) {
       setPage(page - 12);
     }
   };
+
   return (
     <Container>
       <NavBar />
@@ -125,7 +124,6 @@ export const HomePage = () => {
               pages={currentPage}
               onPrev={onPreviusPage}
               onNext={onNextPage}
-              type={type}
             />
           </div>
         </div>
