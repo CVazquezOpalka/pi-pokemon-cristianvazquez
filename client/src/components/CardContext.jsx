@@ -9,28 +9,44 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 export const CardContext = ({ pokePagination, state }) => {
   //logica de componente
   const loading = useSelector((state) => state.isLoading);
+  const searchLoading = useSelector((state) => state.searchLoading);
+  const error = useSelector((state) => state.error);
   //el state pokemons es pasado por props, cuando se realiza una busqueda en la searchbar, carga el nuevo estado
   const dispatch = useDispatch();
 
   const handleClick = () => {
     dispatch(getPokemons());
   };
-
-  return (
+  const renderLoader = () => (
+    <ContainerLoader>
+      <h3>Buscando Pokemon...</h3>
+      <Loader />
+    </ContainerLoader>
+  );
+  
+return (
     <>
       {loading ? (
-        <ContainerLoader>
-          <Loader />
-        </ContainerLoader>
+        renderLoader()
       ) : state.id ? (
-        <Container alter>
-          <div className="btn_goback">
-            <BTNGoBack onClick={() => handleClick()}>
-              <AiOutlineArrowLeft />
-            </BTNGoBack>
-          </div>
-            <Card pokemon={state} alter/>
-        </Container>
+        <>
+          {searchLoading ? (
+            renderLoader()
+          ) : (
+            <Container alter>
+              <div className="btn_goback">
+                <BTNGoBack onClick={() => handleClick()}>
+                  <AiOutlineArrowLeft />
+                </BTNGoBack>
+              </div>
+              {error!==null ? (
+                <h3>{error && <h3>{error.message}</h3>}</h3>
+              ) : (
+                <Card pokemon={state} alter />
+              )}
+            </Container>
+          )}
+        </>
       ) : (
         <Container>
           {loading ? (
@@ -79,4 +95,6 @@ const ContainerLoader = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 30px;
 `;

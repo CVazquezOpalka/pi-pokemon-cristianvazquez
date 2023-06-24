@@ -309,20 +309,23 @@ const Container = styled.main`
           margin: 0 auto;
           margin-right: 0px;
           display: flex;
-          align-items: center;
-          justify-content: center;
+          align-items: flex-start;
+          justify-content: flex-start;
           gap: 5px;
           span {
+            margin: auto 0;
             flex: 30%;
             font-weight: 500;
             font-size: 1.2rem;
             text-transform: uppercase;
-            text-align: center;
+            margin-left: 10px;
           }
           .progress-bar {
+            margin: auto 0;
             width: 100%;
             height: 15px;
-            background: var(--color-ground);
+            border-radius: 10px;
+            background: lightgreen;
           }
         }
       }

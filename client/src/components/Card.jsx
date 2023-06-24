@@ -36,7 +36,7 @@ export const Card = ({ pokemon }) => {
 };
 
 const Container = styled.div`
-  width: ${((props)=>props.alter?"300px":"230px")};
+  width: ${((props)=>props.alter?"300px":"200px")};
   height: ${((props)=>props.alter?"400px":"300px")};
   margin: 0 auto;
   display: flex;

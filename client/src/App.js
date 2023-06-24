@@ -7,8 +7,9 @@ import {
   CreatePage,
   DetailPage,
   Favorites,
+  ErrorPage,
 } from "./pages/index";
-import { getTypes, getPokemons} from "./redux/actions";
+import { getTypes, getPokemons } from "./redux/actions";
 
 function App() {
   //logica del componente
@@ -25,6 +26,7 @@ function App() {
       <Route path="/createPokemon" element={<CreatePage />} />
       <Route path="/pokemon/:id" element={<DetailPage />} />
       <Route path="/favorites" element={<Favorites />} />
+      <Route path="*" element={<ErrorPage/>} />
     </Routes>
   );
 }

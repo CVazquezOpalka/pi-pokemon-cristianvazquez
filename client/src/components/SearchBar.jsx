@@ -1,42 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { searchPokemon} from "../redux/actions";
+import { getPokemonByName } from "../redux/actions";
 
 export const SearchBar = () => {
-
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
+  const [buscar, setBuscar] = useState("");
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     e.preventDefault();
-    setName(e.target.value);
+    setBuscar(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (name) {
-      dispatch(searchPokemon(name))
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (buscar.trim() === "") {
+      alert("Debes ingresar el nombre de un pokemon");
+      return;
     }
-    setName("")
+    dispatch(getPokemonByName(buscar));
   };
+
+
 
   return (
-    <Container onSubmit={handleSubmit}>
+    <Container>
       <input
         type="text"
         placeholder="Busca a tu pokemon por nombre..."
         onChange={handleChange}
       />
-      <button>
+      <button onClick={handleSearch}>
         <AiOutlineSearch />
       </button>
     </Container>
   );
 };
 
-const Container = styled.form`
+const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;

@@ -1,7 +1,6 @@
 import {
   GET_POKEMON,
   GET_POKEMONS,
-  SEARCH_POKEMON,
   GET_TYPES,
   SORT_ORDER,
   FILTER_TYPES,
@@ -10,15 +9,21 @@ import {
   UPDATE_ORDER,
   UPDATE_POKEMONS,
   UPDATE_SEARCH,
-} from "./actions";
+  SEARCH_POKEMON_REQUEST,
+  SEARCH_POKEMON_SUCCESS,
+  SEARCH_POKEMON_FAILURE,
+} from "./actionTypes";
 
 const initialState = {
   types: [],
   pokemons: [],
   pokemon: {},
+  typeLoading: true,
   isLoading: true,
+  searchLoading: false,
   type: "",
   order: "",
+  error: null,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -27,7 +32,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         types: action.payload,
-        isLoading: false,
+        typeLoading: false,
       };
     case GET_POKEMONS:
       return {
@@ -51,11 +56,24 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         pokemon: action.payload,
       };
-    case SEARCH_POKEMON:
+    case SEARCH_POKEMON_REQUEST:
+      return {
+        ...state,
+        searchLoading: true,
+        error: null,
+      };
+    case SEARCH_POKEMON_SUCCESS:
       return {
         ...state,
         pokemons: action.payload,
-        isLoading: false,
+        searchLoading: false,
+        error: null,
+      };
+    case SEARCH_POKEMON_FAILURE:
+      return {
+        ...state,
+        searchLoading: false,
+        error: action.payload,
       };
     case UPDATE_SEARCH:
       return {

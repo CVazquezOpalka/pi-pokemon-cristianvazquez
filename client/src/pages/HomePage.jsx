@@ -86,17 +86,17 @@ export const HomePage = () => {
     }
   };
   //funciones de pagiado
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(0)
   const pagination = () => {
     if (pokemonState.length) return pokemonState.slice(page, page + 12);
     return [];
   };
   const pokePagination = pagination();
   const totalPages = pokemonState.length
-    ? Math.floor(pokemonState.length / 12)
+    ? Math.floor(pokemonState.length / 12) + 1
     : null;
   let currentPage =
-    totalPages === 12
+    totalPages === 13
       ? Math.ceil(page / totalPages) + 1
       : Math.ceil(page / pokemonState.length) + 1;
   const onNextPage = () => {
@@ -124,6 +124,8 @@ export const HomePage = () => {
               pages={currentPage}
               onPrev={onPreviusPage}
               onNext={onNextPage}
+              /* fastPrev={onFirstPage}
+              fastNext ={onLastPage} */
             />
           </div>
         </div>

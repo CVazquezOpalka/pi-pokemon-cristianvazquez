@@ -3,8 +3,15 @@ import styled from "styled-components";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { BotonRedondo } from "../assets/styles/style";
 
-
-export const Pagination = ({ totalPages, onPrev, onNext, pages, state, pokeState }) => {
+export const Pagination = ({
+  totalPages,
+  onPrev,
+  onNext,
+  pages,
+  fastPrev,
+  fastNext,
+}) => {
+  console.log(pages);
   return (
     <>
       <Container>
@@ -12,18 +19,24 @@ export const Pagination = ({ totalPages, onPrev, onNext, pages, state, pokeState
           <h3>Cargando Paginado..</h3>
         ) : (
           <>
-            {pages > 1 ? (
-              <BotonRedondo onClick={onPrev}>
-                <AiOutlineLeft />
-              </BotonRedondo>
-            ) : null}
+            {pages > 1 && (
+              <>
+                <BotonRedondo onClick={fastPrev}><AiOutlineLeft /><AiOutlineLeft /></BotonRedondo>{" "}
+                <BotonRedondo onClick={onPrev}>
+                  <AiOutlineLeft />
+                </BotonRedondo>
+              </>
+            )}
             <h3>
               <span>{pages}</span> de <span>{totalPages}</span>
             </h3>
-            {pages === totalPages ? null : (
-              <BotonRedondo onClick={onNext}>
-                <AiOutlineRight />
-              </BotonRedondo>
+            {pages !== totalPages && (
+              <>
+                <BotonRedondo onClick={onNext}>
+                  <AiOutlineRight />
+                </BotonRedondo>
+                <BotonRedondo onClick={fastNext}><AiOutlineRight /><AiOutlineRight /></BotonRedondo>
+              </>
             )}
           </>
         )}
@@ -45,6 +58,5 @@ const Container = styled.div`
     transition: all 0.3s;
     font-size: 18px;
     letter-spacing: 1px;
-
   }
 `;
