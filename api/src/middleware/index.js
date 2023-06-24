@@ -39,7 +39,7 @@ const info = async (name, id) => {
       tipos: e.tipos.map((e) => e.name),
     });
   });
-  const URL = "https://pokeapi.co/api/v2/pokemon?limit=150";
+  const URL = "https://pokeapi.co/api/v2/pokemon?limit=151";
   const { data } = await axios.get(URL);
 
   let pokeArr = [];

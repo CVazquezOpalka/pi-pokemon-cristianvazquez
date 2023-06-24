@@ -7,8 +7,8 @@ const getPokemons = async (req, res) => {
     if (name) {
       const result = await info(name, null);
       if (!result) {
-        return res.status(400).send({
-          message: `El pokemon con el nombre: ${name}, no se encuentra en la base de datos`,
+        return res.status(404).json({
+          message: `El pokemon con el nombre: "${name}", no se encuentra en la base de datos`,
         });
       } else return res.status(200).json(result);
     }
