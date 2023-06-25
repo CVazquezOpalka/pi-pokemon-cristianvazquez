@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useDispatch } from "react-redux";
@@ -7,7 +7,6 @@ import { getPokemonByName } from "../redux/actions";
 export const SearchBar = () => {
   const dispatch = useDispatch();
   const [buscar, setBuscar] = useState("");
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -22,8 +21,6 @@ export const SearchBar = () => {
     }
     dispatch(getPokemonByName(buscar));
   };
-
-
 
   return (
     <Container>

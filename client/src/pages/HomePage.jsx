@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import {
-  NavBar,
-  Pagination,
-  FilterBar,
-  CardContext,
-} from "../components/index";
+//Componentes
+import { Pagination, FilterBar, CardContext } from "../components/index";
+//Hooks
 import { useSelector, useDispatch } from "react-redux";
+//actions
 import {
   filterTypes,
   updateOrder,
   sortOrder,
   updateType,
 } from "../redux/actions";
+//helpers
 import { ordered, tipos } from "../assets/utils/utils.js";
 
 export const HomePage = () => {
-  /* ESTADOS GENERALES */
+  
   const dispatch = useDispatch();
+  //estados generales de redux
   const typeState = useSelector((state) => state.types);
   let pokemonState = useSelector((state) => state.pokemons);
   const type = useSelector((state) => state.type);
@@ -27,7 +27,7 @@ export const HomePage = () => {
   if (order) pokemonState = ordered(order, pokemonState);
   if (type) pokemonState = tipos(type, pokemonState);
 
-  //ESTADOS GENERALES, MANEJAN LA ACCION DEL TOOGLE, EL PAGINADO Y EL FILTRO DE TIPOS
+  //estados locales, MANEJAN LA ACCION DEL TOOGLE, EL PAGINADO Y EL FILTRO DE TIPOS Y ORDEN
   //controla el toogle de la barra de filtros
   const [show, setShow] = useState(false);
   //controlador de filtros por tipo
@@ -69,7 +69,6 @@ export const HomePage = () => {
     });
     if (e.target.checked) {
       dispatch(filterTypes(e.target.name));
-      setPage(0);
     } else {
       dispatch(updateType(""));
     }
@@ -86,33 +85,41 @@ export const HomePage = () => {
     }
   };
   //funciones de pagiado
-  const [page, setPage] = useState(0)
+  const itemsPerPage = 12;
+  const totalPages = Math.ceil(pokemonState.length / itemsPerPage);
+
   const pagination = () => {
-    if (pokemonState.length) return pokemonState.slice(page, page + 12);
-    return [];
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    if (pokemonState.length) return pokemonState.slice(startIndex, endIndex);
   };
-  const pokePagination = pagination();
-  const totalPages = pokemonState.length
-    ? Math.floor(pokemonState.length / 12) + 1
-    : null;
-  let currentPage =
-    totalPages === 13
-      ? Math.ceil(page / totalPages) + 1
-      : Math.ceil(page / pokemonState.length) + 1;
+
+  const [page, setPage] = useState(1); // Inicialización de page en 1
+
   const onNextPage = () => {
-    if (pokemonState.length > page + 12) {
-      setPage(page + 12);
-    }
-  };
-  const onPreviusPage = () => {
-    if (page > 0) {
-      setPage(page - 12);
+    if (page < totalPages) {
+      setPage((prevPage) => prevPage + 1);
     }
   };
 
+  const onPreviusPage = () => {
+    if (page > 1) {
+      setPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  const onFirstPage = () => {
+    setPage(1);
+  };
+
+  const onLastPage = () => {
+    setPage(totalPages);
+  };
+
+  const pokePagination = pagination();
+
   return (
     <Container>
-      <NavBar />
       <div className="pagination_and_filteres">
         <div className="top_content">
           <div className="filteres">
@@ -121,11 +128,11 @@ export const HomePage = () => {
           <div className="pagination">
             <Pagination
               totalPages={totalPages}
-              pages={currentPage}
+              pages={page}
               onPrev={onPreviusPage}
               onNext={onNextPage}
-              /* fastPrev={onFirstPage}
-              fastNext ={onLastPage} */
+              fastPrev={onFirstPage}
+              fastNext={onLastPage}
             />
           </div>
         </div>

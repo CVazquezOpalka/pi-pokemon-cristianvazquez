@@ -23,39 +23,37 @@ export const CardContext = ({ pokePagination, state }) => {
       <Loader />
     </ContainerLoader>
   );
-  
-return (
-    <>
+
+  const renderSearchContent = () => (
+    <Container alter>
+      <div className="btn_goback">
+        <BTNGoBack onClick={() => handleClick()}>
+          <AiOutlineArrowLeft />
+        </BTNGoBack>
+      </div>
+      {error ? <h3>{error.message}</h3> : <Card pokemon={state} alter />}
+    </Container>
+  );
+
+  const renderNormalContent = () => (
+    <Container>
       {loading ? (
-        renderLoader()
-      ) : state.id ? (
-        <>
-          {searchLoading ? (
-            renderLoader()
-          ) : (
-            <Container alter>
-              <div className="btn_goback">
-                <BTNGoBack onClick={() => handleClick()}>
-                  <AiOutlineArrowLeft />
-                </BTNGoBack>
-              </div>
-              {error!==null ? (
-                <h3>{error && <h3>{error.message}</h3>}</h3>
-              ) : (
-                <Card pokemon={state} alter />
-              )}
-            </Container>
-          )}
-        </>
+        <Loader />
       ) : (
-        <Container>
-          {loading ? (
-            <Loader />
-          ) : (
-            pokePagination.map((e) => <Card pokemon={e} key={e.id} />)
-          )}
-        </Container>
+        pokePagination.map((e) => <Card pokemon={e} key={e.id} />)
       )}
+    </Container>
+  );
+
+  return (
+    <>
+      {loading
+        ? renderLoader()
+        : searchLoading
+        ? renderLoader()
+        : state.id
+        ? renderSearchContent()
+        : renderNormalContent()}
     </>
   );
 };

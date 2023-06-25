@@ -24,83 +24,85 @@ export const DetailPage = () => {
     return () => dispatch(updatePokemon({}));
   }, []);
 
+  const renderLoader = () => (
+    <ContainerLoader>
+      <Loader />
+    </ContainerLoader>
+  );
+
+  if (pokemonState.id === undefined) {
+    return renderLoader();
+  }
+
   return (
     <Container>
-      {pokemonState.id === undefined ? (
-        <div className="loader">
-          <Loader />
+      <div className="btn_goback">
+        <BTNGoBack onClick={() => handleClick()}>
+          <AiOutlineArrowLeft />
+        </BTNGoBack>
+      </div>
+      <div className="pokemon_detail_page">
+        <div className="page_top">
+          <div className="pokeid_pokeTitle">
+            <h2>
+              <i>
+                {pokemonState.id < 10
+                  ? `#00${pokemonState.id}`
+                  : pokemonState.id < 100
+                  ? `#0${pokemonState.id}`
+                  : `#${pokemonState.id}`}
+              </i>
+            </h2>
+            <h1>{pokemonState.name}</h1>
+            <div className="peso_altura">
+              <h3>
+                Peso: <span className="peso">{pokemonState.peso} lbs.</span>
+              </h3>
+              <h3>
+                Altura: <span className="altura">{pokemonState.altura}</span>{" "}
+                cm.
+              </h3>
+            </div>
+            <div className="types">
+              {pokemonState.tipos?.map((e, index) => (
+                <span key={index} className={e.name ? e.name : e}>
+                  {e.name ? e.name : e}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="container_image">
+            <img src={pokemonState?.image} alt={pokemonState.name} />
+          </div>
         </div>
-      ) : (
-        <>
-          <div className="btn_goback">
-            <BTNGoBack onClick={() => handleClick()}>
-              <AiOutlineArrowLeft />
-            </BTNGoBack>
+        <div className="estadisticas_container">
+          <div className="title">
+            <h4>Estadisticas:</h4>
           </div>
-          <div className="pokemon_detail_page">
-            <div className="page_top">
-              <div className="pokeid_pokeTitle">
-                <h2>
-                  <i>
-                    {pokemonState.id < 10
-                      ? `#00${pokemonState.id}`
-                      : pokemonState.id < 100
-                      ? `#0${pokemonState.id}`
-                      : `#${pokemonState.id}`}
-                  </i>
-                </h2>
-                <h1>{pokemonState.name}</h1>
-                <div className="peso_altura">
-                  <h3>
-                    Peso: <span className="peso">{pokemonState.peso} lbs.</span>
-                  </h3>
-                  <h3>
-                    Altura:{" "}
-                    <span className="altura">{pokemonState.altura}</span> cm.
-                  </h3>
-                </div>
-                <div className="types">
-                  {pokemonState.tipos?.map((e, index) => (
-                    <span key={index} className={e.name ? e.name : e}>
-                      {e.name ? e.name : e}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="container_image">
-                <img src={pokemonState?.image} alt={pokemonState.name} />
-              </div>
+          <div className="estadisticas">
+            <div className="stat-group">
+              <span>Hp</span>
+              <div className="progress-bar"></div>
+              <span className="counter-stat">{pokemonState.vida}</span>
             </div>
-            <div className="estadisticas_container">
-              <div className="title">
-                <h4>Estadisticas:</h4>
-              </div>
-              <div className="estadisticas">
-                <div className="stat-group">
-                  <span>Hp</span>
-                  <div className="progress-bar"></div>
-                  <span className="counter-stat">{pokemonState.vida}</span>
-                </div>
-                <div className="stat-group">
-                  <span>Ataque</span>
-                  <div className="progress-bar"></div>
-                  <span className="counter-stat">{pokemonState.fuerza}</span>
-                </div>
-                <div className="stat-group">
-                  <span>Defensa</span>
-                  <div className="progress-bar"></div>
-                  <span className="counter-stat">{pokemonState.defensa}</span>
-                </div>
-                <div className="stat-group">
-                  <span>velocidad</span>
-                  <div className="progress-bar"></div>
-                  <span className="counter-stat">{pokemonState.velocidad}</span>
-                </div>
-              </div>
+            <div className="stat-group">
+              <span>Ataque</span>
+              <div className="progress-bar"></div>
+              <span className="counter-stat">{pokemonState.fuerza}</span>
+            </div>
+            <div className="stat-group">
+              <span>Defensa</span>
+              <div className="progress-bar"></div>
+              <span className="counter-stat">{pokemonState.defensa}</span>
+            </div>
+            <div className="stat-group">
+              <span>velocidad</span>
+              <div className="progress-bar"></div>
+              <span className="counter-stat">{pokemonState.velocidad}</span>
             </div>
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </Container>
   );
 };
@@ -126,13 +128,6 @@ const Container = styled.main`
         transform: scale(1.1);
       }
     }
-  }
-  .loader {
-    width: 100;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   .pokemon_detail_page {
     margin-top: 25px;
@@ -331,4 +326,12 @@ const Container = styled.main`
       }
     }
   }
+`;
+
+const ContainerLoader = styled.div`
+  width: 100;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

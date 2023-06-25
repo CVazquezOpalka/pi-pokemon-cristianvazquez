@@ -1,7 +1,6 @@
 import {
   GET_POKEMONS,
   GET_POKEMON,
-  CREATE_POKEMON,
   GET_TYPES,
   FILTER_TYPES,
   SORT_ORDER,
@@ -117,7 +116,7 @@ export function getPokemonByName(name) {
         if (!response.ok) {
           let error;
           try {
-            error = await response.json(); // 
+            error = await response.json(); //
           } catch (err) {
             //mensaje alternativo
             error = { message: "Error desconocido" }; // Si no se puede extraer, asignamos un error genérico

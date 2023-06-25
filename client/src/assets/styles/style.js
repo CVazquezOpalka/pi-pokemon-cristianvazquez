@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+
 export const BotonRedondo = styled.button`
   width: 35px;
   height: 35px;
@@ -32,4 +33,19 @@ export const BTNGoBack = styled.button`
   }
 `;
 
-export const BotonRectangulo = styled.button``;
+export const BotonRectangulo = styled.button`
+width: 300px;
+height: 90px;
+border-radius: 40px;
+border: 1px solid #111;
+background: #111;
+color: #fff;
+font-size: 18px;
+cursor: pointer;
+transition: 0.3s ease;
+&:hover{
+  transform: scale(1.2)
+}
+
+
+`;

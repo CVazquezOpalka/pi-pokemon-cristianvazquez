@@ -21,7 +21,10 @@ export const Pagination = ({
           <>
             {pages > 1 && (
               <>
-                <BotonRedondo onClick={fastPrev}><AiOutlineLeft /><AiOutlineLeft /></BotonRedondo>{" "}
+                <BotonRedondo onClick={fastPrev}>
+                  <AiOutlineLeft />
+                  <AiOutlineLeft />
+                </BotonRedondo>
                 <BotonRedondo onClick={onPrev}>
                   <AiOutlineLeft />
                 </BotonRedondo>
@@ -35,7 +38,10 @@ export const Pagination = ({
                 <BotonRedondo onClick={onNext}>
                   <AiOutlineRight />
                 </BotonRedondo>
-                <BotonRedondo onClick={fastNext}><AiOutlineRight /><AiOutlineRight /></BotonRedondo>
+                <BotonRedondo onClick={fastNext}>
+                  <AiOutlineRight />
+                  <AiOutlineRight />
+                </BotonRedondo>
               </>
             )}
           </>
