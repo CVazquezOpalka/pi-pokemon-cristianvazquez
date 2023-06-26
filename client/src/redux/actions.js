@@ -78,7 +78,6 @@ export const createPokemonAceptado = () => ({
 
 export const createPokemonFallo = () => ({
   type: CREATE_POKEMON_FALLO,
- 
 });
 
 //funcion de creacion
@@ -128,11 +127,11 @@ export function getTypes() {
   };
 }
 
-export const getPokemonsRequest = ()=>({
+export const getPokemonsRequest = () => ({
   type: GET_POKEMONS_REQUEST,
-})
+});
 
-export function getPokemons() {
+/* export function getPokemons() {
   return function (dispatch) {
     return fetch("http://localhost:3001/pokemons")
       .then((res) => res.json())
@@ -143,8 +142,21 @@ export function getPokemons() {
         })
       );
   };
-}
-
+} */
+export const getPokemons = () => async (dispatch) => {
+  const URL = "http://localhost:3001/pokemons";
+  try {
+    const response = await fetch(URL);
+    if (!response.ok) throw Error("error");
+    const data = await response.json();
+    dispatch({
+      type: GET_POKEMONS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export function getPokemon(id) {
   return function (dispatch) {
