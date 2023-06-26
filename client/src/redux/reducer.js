@@ -12,6 +12,9 @@ import {
   SEARCH_POKEMON_REQUEST,
   SEARCH_POKEMON_SUCCESS,
   SEARCH_POKEMON_FAILURE,
+  CREATE_POKEMON_REQUEST,
+  CREATE_POKEMON_ACEPTADO,
+  CREATE_POKEMON_FALLO,
 } from "./actionTypes";
 
 const initialState = {
@@ -21,6 +24,7 @@ const initialState = {
   typeLoading: true,
   isLoading: true,
   searchLoading: false,
+  createStatus: false,
   type: "",
   order: "",
   error: null,
@@ -78,7 +82,7 @@ export const rootReducer = (state = initialState, action) => {
     case UPDATE_SEARCH:
       return {
         ...state,
-        search: action.payload,
+        pokemons: action.payload,
       };
     case FILTER_TYPES:
       return {
@@ -99,6 +103,24 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         order: action.payload,
+      };
+    case CREATE_POKEMON_REQUEST:
+      return {
+        ...state,
+        createStatus: true,
+        error: null,
+      };
+    case CREATE_POKEMON_ACEPTADO:
+      return {
+        ...state,
+        createStatus: false,
+        error: null,
+      };
+    case CREATE_POKEMON_FALLO:
+      return {
+        ...state,
+        createStatus: false,
+        error: "no se pudo crear el pokrmon"
       };
     default:
       return state;

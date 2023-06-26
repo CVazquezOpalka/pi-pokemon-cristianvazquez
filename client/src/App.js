@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { NavBar } from "./components";
+import { NavBar, Footer } from "./components/index";
 import {
   LandingPage,
   HomePage,
@@ -21,8 +21,9 @@ function App() {
   useEffect(() => {
     dispatch(getTypes());
     dispatch(getPokemons());
-  }, []);
+  }, [dispatch]);
   const showNavbar = location.pathname === "/home";
+  const showFooter = location.pathname === "/home";
   return (
     <>
       {showNavbar && <NavBar />}
@@ -34,6 +35,7 @@ function App() {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
+      {showFooter && <Footer />}
     </>
   );
 }

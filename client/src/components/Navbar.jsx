@@ -2,22 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import TitleBanner from "../assets/image/titulon.png";
 import { SearchBar } from "./index";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { BotonNavBar } from "../assets/styles/style";
 
 export const NavBar = () => {
+  const navigate = useNavigate();
   return (
     <Container>
       <header>
         <img src={TitleBanner} alt="logo de la pagina" />
       </header>
       <nav className="container-nav">
-        <ul>
-          <li>
-            <span>
-              <Link to="/createPokemon">Create Pokemon</Link>
-            </span>
-          </li>
-        </ul>
+        <BotonNavBar onClick={() => navigate("/createPokemon")}>
+          Create Pokemon
+        </BotonNavBar>
       </nav>
       <div className="search-container">
         <SearchBar />
@@ -57,45 +55,10 @@ const Container = styled.div`
   }
   .container-nav {
     width: 400px;
-    height: auto;
-    ul {
-      width: 100%;
-      height: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      list-style: none;
-    }
-    li {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      span {
-        position: relative;
-        display: inline-block;
-        padding: 10px 20px;
-        border-radius: 10px;
-         border: 1px solid transparent;
-        transition: 0.5s ease-in-out;
-        cursor: pointer;
-        a {
-          color: #111;
-          text-decoration: none;
-          text-transform: uppercase;
-          font-weight: 500;
-          letter-spacing: 0.2rem;
-          &:hover {
-            color: #fff;
-          }
-        }
-        &:hover {
-          border: 1px solid black;
-          background: #333;
-          color: #fff;
-        }
-      }
-    }
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   @media (max-width: 767px) {
     margin: 0;

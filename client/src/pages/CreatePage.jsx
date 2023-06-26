@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { PokeForm } from "../components/PokemonForm";
 import Image from "../assets/image/fondo.jpeg";
 import { BTNGoBack } from "../assets/styles/style";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 export const CreatePage = () => {
@@ -18,7 +17,7 @@ export const CreatePage = () => {
             color={true.toString()}
             onClick={() => navigate("/home")}
           >
-            <AiOutlineArrowLeft />
+          {"<"}
           </BTNGoBack>
         </div>
         <div className="title_form">

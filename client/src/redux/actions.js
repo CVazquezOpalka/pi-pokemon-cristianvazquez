@@ -1,4 +1,5 @@
 import {
+  GET_POKEMONS_REQUEST,
   GET_POKEMONS,
   GET_POKEMON,
   GET_TYPES,
@@ -12,6 +13,9 @@ import {
   SEARCH_POKEMON_REQUEST,
   SEARCH_POKEMON_SUCCESS,
   SEARCH_POKEMON_FAILURE,
+  CREATE_POKEMON_REQUEST,
+  CREATE_POKEMON_ACEPTADO,
+  CREATE_POKEMON_FALLO,
 } from "./actionTypes";
 
 //FUNCIONES DE LIMPIEZA
@@ -22,7 +26,6 @@ export const updateSearch = (payload) => {
     payload,
   };
 };
-
 export const updatePokemons = (payload) => {
   return {
     type: UPDATE_POKEMONS,
@@ -35,21 +38,18 @@ export const updatePokemon = (payload) => {
     payload,
   };
 };
-
 export const updateType = (payload) => {
   return {
     type: UPDATE_TYPE,
     payload,
   };
 };
-
 export const updateOrder = (payload) => {
   return {
     type: UPDATE_ORDER,
     payload,
   };
 };
-
 //CONTROLADOR DE ERRORES DEL SEARCH BAR;
 
 export const searchPokemonRequest = () => ({
@@ -66,6 +66,53 @@ export const searchPokemonFailure = (error) => ({
   payload: error,
 });
 
+// CONROLADOR DEL FORMULARIO DE CREACION
+
+export const createPokemonRequest = () => ({
+  type: CREATE_POKEMON_REQUEST,
+});
+
+export const createPokemonAceptado = () => ({
+  type: CREATE_POKEMON_ACEPTADO,
+});
+
+export const createPokemonFallo = () => ({
+  type: CREATE_POKEMON_FALLO,
+ 
+});
+
+//funcion de creacion
+
+export const createPokemon = (pokemonData) => {
+  return async (dispatch) => {
+    dispatch(createPokemonRequest()); // Iniciar la solicitud
+    try {
+      const response = await fetch("http://localhost:3001/pokemons", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(pokemonData),
+      });
+
+      if (response.status === 400) {
+        alert(
+          `Ya existe el Pokémon con el nombre ${pokemonData.name.toLowerCase()}`
+        );
+        throw new Error(
+          `Ya existe el Pokémon con el nombre "${pokemonData.name.toLowerCase()}"`
+        );
+      } else {
+        alert("Pokémon creado con éxito");
+        dispatch(createPokemonAceptado()); // Solicitud exitosa
+      }
+    } catch (error) {
+      dispatch(createPokemonFallo(error)); // Error en la solicitud
+    }
+  };
+};
+
 //LLAMADOS A LA API
 
 export function getTypes() {
@@ -81,6 +128,10 @@ export function getTypes() {
   };
 }
 
+export const getPokemonsRequest = ()=>({
+  type: GET_POKEMONS_REQUEST,
+})
+
 export function getPokemons() {
   return function (dispatch) {
     return fetch("http://localhost:3001/pokemons")
@@ -93,6 +144,7 @@ export function getPokemons() {
       );
   };
 }
+
 
 export function getPokemon(id) {
   return function (dispatch) {
@@ -109,28 +161,32 @@ export function getPokemon(id) {
 export function getPokemonByName(name) {
   return function (dispatch) {
     //esta funcion recibe un nombre como argumento y despacha 3 acciones,
+    //pone el estado loading en true, error en null
     dispatch(searchPokemonRequest());
-    return fetch(`http://localhost:3001/pokemons?name=${name}`)
-      .then(async (response) => {
-        //primera accion a despachar el manejo de errores, si la respuesta es distinta de ok, obtenemos el error y lo arrojamos al catch
-        if (!response.ok) {
-          let error;
-          try {
-            error = await response.json(); //
-          } catch (err) {
-            //mensaje alternativo
-            error = { message: "Error desconocido" }; // Si no se puede extraer, asignamos un error genérico
+    return (
+      fetch(`http://localhost:3001/pokemons?name=${name}`)
+        //control del error
+        .then(async (response) => {
+          //primera accion a despachar el manejo de errores, si la respuesta es distinta de ok, obtenemos el error y lo arrojamos al catch
+          if (!response.ok) {
+            let error;
+            try {
+              error = await response.json(); //
+            } catch (err) {
+              //mensaje alternativo
+              error = { message: "Error desconocido" }; // Si no se puede extraer, asigno un error genérico
+            }
+            throw error;
           }
-          throw error;
-        }
-        return response.json();
-      })
-      .then((pokemon) => {
-        dispatch(searchPokemonSuccess(pokemon));
-      })
-      .catch((error) => {
-        dispatch(searchPokemonFailure(error));
-      });
+          return response.json();
+        })
+        .then((pokemon) => {
+          dispatch(searchPokemonSuccess(pokemon));
+        })
+        .catch((error) => {
+          dispatch(searchPokemonFailure(error));
+        })
+    );
   };
 }
 

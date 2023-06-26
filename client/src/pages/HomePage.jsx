@@ -15,7 +15,6 @@ import {
 import { ordered, tipos } from "../assets/utils/utils.js";
 
 export const HomePage = () => {
-  
   const dispatch = useDispatch();
   //estados generales de redux
   const typeState = useSelector((state) => state.types);
@@ -69,6 +68,7 @@ export const HomePage = () => {
     });
     if (e.target.checked) {
       dispatch(filterTypes(e.target.name));
+      setPage(1);
     } else {
       dispatch(updateType(""));
     }
@@ -236,6 +236,7 @@ const Container = styled.div`
   width: 100vw;
   height: auto;
   position: relative;
+  margin-bottom: 40px;
   .drawwer_close {
     position: fixed;
     top: 0;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { AiOutlineSearch } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { getPokemonByName } from "../redux/actions";
 
@@ -30,7 +29,7 @@ export const SearchBar = () => {
         onChange={handleChange}
       />
       <button onClick={handleSearch}>
-        <AiOutlineSearch />
+      {"🔍"}
       </button>
     </Container>
   );

@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { getPokemons } from "../redux/actions";
-import { useNavigate } from "react-router-dom";
+import { createPokemon } from "../redux/actions";
+import { Loader } from "./Loader";
+
 
 export const PokeForm = () => {
   //logica del componente
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const option = useSelector((state) => state.types);
+  const createStatus = useSelector((state) => state.createStatus);
   //imagenes que se renderizan al costadoen forma de una targeta de presentacion
   const image1 =
     "https://raw.githubusercontent.com/MartaFagundez/pokedex-frontend/main/src/images/pk1.png";
@@ -109,17 +110,7 @@ export const PokeForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const crear = await fetch("http://localhost:3001/pokemons", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    dispatch(getPokemons());
+    dispatch(createPokemon(data));
     setData({
       name: "",
       vida: 0,
@@ -130,205 +121,221 @@ export const PokeForm = () => {
       peso: 0,
       tipos: [],
     });
-    if (crear.status === 400) {
-      alert(`ya existe el pokemon con el nombre ${data.name.toLowerCase()}`);
-    } else {
-      alert("pokemon creado con exito");
-      navigate(-1);
-    }
+    setSelectTipo1(null);
+   
   };
+
+  const renderLoader = () => (
+    <div className="container_loader">
+      <h3>Creando Pokemon</h3>
+      <Loader />
+    </div>
+  );
+
   return (
     <Container>
-      <div className="card_container">
-        <div className="img_box">
-          <img src={mostrarImagen} alt="imagen de muestra" />
-        </div>
-        <div className="card_context">
-          <h3>
-            Vida: <span>{data.vida}</span>
-          </h3>
-          <h3>
-            fuerza: <span>{data.fuerza}</span>
-          </h3>
-          <h3>
-            defensa: <span>{data.defensa}</span>
-          </h3>
-          <h3>
-            velocidad: <span>{data.velocidad}</span>
-          </h3>
-          <h3>
-            peso: <span>{data.peso}</span>
-          </h3>
-          <h3>
-            altura: <span>{data.altura}</span>
-          </h3>
-        </div>
-      </div>
-      <div className="form_container_values">
-        <div className="selected_image">
-          <h3>seleccione una image</h3>
-          <select name="image" onChange={handleSelectImage}>
-            <option value="">seleccion de imagenes</option>
-            <option value={image1}>avatar 1</option>
-            <option value={image2}>avatar 2</option>
-            <option value={image3}>avatar 3</option>
-            <option value={image4}>avatar 4</option>
-            <option value={image5}>avatar 5</option>
-          </select>
-        </div>
-        <form action="POST" className="form_container" onSubmit={handleSubmit}>
-          <div className="name_container">
-            <label>
-              Nombre
-              <input
-                type="text"
-                placeholder="ingresa el nombre de tu pokemon"
-                name="name"
-                value={data.name}
-                onChange={handleInput}
-                required
-              />
-            </label>
-            {errors.n1 ? (
-              <p className="danger_n1">{errors.n1}</p>
-            ) : errors.n2 ? (
-              <p className="danger_n2">{errors.n2}</p>
-            ) : (
-              false
-            )}
-          </div>
-
-          <div className="container_type_selector">
-            <div className="type_selector">
-              <label>
-                1º Tipo
-                <select
-                  defaultValue="default"
-                  name="tipo1"
-                  value={
-                    data.tipos.length >= 1 ? data.tipos.length[0] : selectTipo1
-                  }
-                  onChange={handleSelectedType1}
-                  required
-                >
-                  <option disabled selected value="default">
-                    Tipo 1
-                  </option>
-                  {option.map((e) => (
-                    <option key={e.id} value={e.id}>
-                      {e.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              {errors.t ? <p className="danger_t">{errors.t}</p> : false}
+      {createStatus ? (
+        renderLoader()
+      ) : (
+        <>
+          <div className="card_container">
+            <div className="img_box">
+              <img src={mostrarImagen} alt="imagen de muestra" />
             </div>
-            <div className="type_selector">
-              {selectTipo1 ? (
+            <div className="card_context">
+              <h3>
+                Vida: <span>{data.vida}</span>
+              </h3>
+              <h3>
+                fuerza: <span>{data.fuerza}</span>
+              </h3>
+              <h3>
+                defensa: <span>{data.defensa}</span>
+              </h3>
+              <h3>
+                velocidad: <span>{data.velocidad}</span>
+              </h3>
+              <h3>
+                peso: <span>{data.peso}</span>
+              </h3>
+              <h3>
+                altura: <span>{data.altura}</span>
+              </h3>
+            </div>
+          </div>
+          <div className="form_container_values">
+            <div className="selected_image">
+              <h3>seleccione una image</h3>
+              <select name="image" onChange={handleSelectImage}>
+                <option value="">seleccion de imagenes</option>
+                <option value={image1}>avatar 1</option>
+                <option value={image2}>avatar 2</option>
+                <option value={image3}>avatar 3</option>
+                <option value={image4}>avatar 4</option>
+                <option value={image5}>avatar 5</option>
+              </select>
+            </div>
+            <form
+              action="POST"
+              className="form_container"
+              onSubmit={handleSubmit}
+            >
+              <div className="name_container">
                 <label>
-                  2º Tipo
-                  <select
-                    onChange={handleSelectedType2}
-                    defaultValue="default"
-                    name="tipo2"
-                    value={
-                      data.tipos.length === 2
-                        ? data.tipos.length[1]
-                        : selectTipo2
-                    }
-                  >
-                    <option
-                      disabled
-                      selected={!selectTipo2}
+                  Nombre
+                  <input
+                    type="text"
+                    placeholder="ingresa el nombre de tu pokemon"
+                    name="name"
+                    value={data.name}
+                    onChange={handleInput}
+                    required
+                  />
+                </label>
+                {errors.n1 ? (
+                  <p className="danger_n1">{errors.n1}</p>
+                ) : errors.n2 ? (
+                  <p className="danger_n2">{errors.n2}</p>
+                ) : (
+                  false
+                )}
+              </div>
+
+              <div className="container_type_selector">
+                <div className="type_selector">
+                  <label>
+                    1º Tipo
+                    <select
                       defaultValue="default"
+                      name="tipo1"
+                      value={
+                        data.tipos.length >= 1
+                          ? data.tipos.length[0]
+                          : selectTipo1
+                      }
+                      onChange={handleSelectedType1}
+                      required
                     >
-                      Tipo 2
-                    </option>
-                    {option
-                      .filter((e) => e.id !== Number(selectTipo1))
-                      .map(({ name, id }) => (
-                        <option value={id} key={id}>
-                          {name}
+                      <option disabled selected value="default">
+                        Tipo 1
+                      </option>
+                      {option.map((e) => (
+                        <option key={e.id} value={e.id}>
+                          {e.name}
                         </option>
                       ))}
-                  </select>
+                    </select>
+                  </label>
+                  {errors.t ? <p className="danger_t">{errors.t}</p> : false}
+                </div>
+                <div className="type_selector">
+                  {selectTipo1 ? (
+                    <label>
+                      2º Tipo
+                      <select
+                        onChange={handleSelectedType2}
+                        defaultValue="default"
+                        name="tipo2"
+                        value={
+                          data.tipos.length === 2
+                            ? data.tipos.length[1]
+                            : selectTipo2
+                        }
+                      >
+                        <option
+                          disabled
+                          selected={!selectTipo2}
+                          defaultValue="default"
+                        >
+                          Tipo 2
+                        </option>
+                        {option
+                          .filter((e) => e.id !== Number(selectTipo1))
+                          .map(({ name, id }) => (
+                            <option value={id} key={id}>
+                              {name}
+                            </option>
+                          ))}
+                      </select>
+                    </label>
+                  ) : null}
+                </div>
+              </div>
+              <div className="container_points_range">
+                <label>
+                  vida
+                  <input
+                    onChange={handleInput}
+                    name="vida"
+                    defaultValue={data.vida}
+                    type="range"
+                    min="1"
+                    max="100"
+                  />
                 </label>
-              ) : null}
-            </div>
+                <label>
+                  fuerza
+                  <input
+                    onChange={handleInput}
+                    name="fuerza"
+                    defaultValue={data.fuerza}
+                    type="range"
+                    min="1"
+                    max="100"
+                  />
+                </label>
+                <label>
+                  defensa
+                  <input
+                    onChange={handleInput}
+                    name="defensa"
+                    defaultValue={data.defensa}
+                    type="range"
+                    min="1"
+                    max="100"
+                  />
+                </label>
+                <label>
+                  velocidad
+                  <input
+                    onChange={handleInput}
+                    name="velocidad"
+                    defaultValue={data.velocidad}
+                    type="range"
+                    min="1"
+                    max="100"
+                  />
+                </label>
+                <label>
+                  peso
+                  <input
+                    name="peso"
+                    defaultValue={data.peso}
+                    onChange={handleInput}
+                    type="range"
+                    min="1"
+                    max="100"
+                  />
+                </label>
+                <label>
+                  altura
+                  <input
+                    name="altura"
+                    defaultValue={data.altura}
+                    onChange={handleInput}
+                    type="range"
+                    min="1"
+                    max="100"
+                  />
+                </label>
+              </div>
+              <div className="btnCrear">
+                <button>Crear</button>
+              </div>
+            </form>
           </div>
-          <div className="container_points_range">
-            <label>
-              vida
-              <input
-                onChange={handleInput}
-                name="vida"
-                defaultValue={data.vida}
-                type="range"
-                min="1"
-                max="100"
-              />
-            </label>
-            <label>
-              fuerza
-              <input
-                onChange={handleInput}
-                name="fuerza"
-                defaultValue={data.fuerza}
-                type="range"
-                min="1"
-                max="100"
-              />
-            </label>
-            <label>
-              defensa
-              <input
-                onChange={handleInput}
-                name="defensa"
-                defaultValue={data.defensa}
-                type="range"
-                min="1"
-                max="100"
-              />
-            </label>
-            <label>
-              velocidad
-              <input
-                onChange={handleInput}
-                name="velocidad"
-                defaultValue={data.velocidad}
-                type="range"
-                min="1"
-                max="100"
-              />
-            </label>
-            <label>
-              peso
-              <input
-                name="peso"
-                defaultValue={data.peso}
-                onChange={handleInput}
-                type="range"
-                min="1"
-                max="100"
-              />
-            </label>
-            <label>
-              altura
-              <input
-                name="altura"
-                defaultValue={data.altura}
-                onChange={handleInput}
-                type="range"
-                min="1"
-                max="100"
-              />
-            </label>
-          </div>
-          <div className="btnCrear">
-            <button>Crear</button>
-          </div>
-        </form>
-      </div>
+        </>
+      )}
     </Container>
   );
 };
@@ -337,6 +344,18 @@ const Container = styled.div`
   width: 100%;
   height: 550px;
   display: flex;
+  .container_loader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    h3 {
+      color: #fff;
+    }
+  }
   .card_container {
     width: 30%;
     height: 100%;

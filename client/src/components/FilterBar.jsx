@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { MdFilterAlt } from "react-icons/md";
+
 import { BotonRedondo } from "../assets/styles/style";
 
 export const FilterBar = ({ openDrawwer, drawwer }) => {
@@ -8,7 +8,7 @@ export const FilterBar = ({ openDrawwer, drawwer }) => {
     <Container>
       <div className="btn_filter">
         <BotonRedondo onClick={() => openDrawwer(!drawwer)}>
-          <MdFilterAlt />
+          {"🌀"}
         </BotonRedondo>
       </div>
     </Container>

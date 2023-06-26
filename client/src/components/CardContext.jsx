@@ -4,7 +4,6 @@ import { Card, Loader } from "./index";
 import { useDispatch, useSelector } from "react-redux";
 import { BTNGoBack } from "../assets/styles/style";
 import { getPokemons } from "../redux/actions";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 
 export const CardContext = ({ pokePagination, state }) => {
   //logica de componente
@@ -27,9 +26,7 @@ export const CardContext = ({ pokePagination, state }) => {
   const renderSearchContent = () => (
     <Container alter>
       <div className="btn_goback">
-        <BTNGoBack onClick={() => handleClick()}>
-          <AiOutlineArrowLeft />
-        </BTNGoBack>
+        <BTNGoBack onClick={() => handleClick()}>{"<"}</BTNGoBack>
       </div>
       {error ? <h3>{error.message}</h3> : <Card pokemon={state} alter />}
     </Container>

@@ -46,6 +46,22 @@ transition: 0.3s ease;
 &:hover{
   transform: scale(1.2)
 }
-
-
 `;
+
+export const BotonNavBar = styled.button`
+width: 200px;
+height: 40px;
+border-radius: 10px;
+border: 1px solid #111;
+background: none;
+color: #111;
+font-size: 18px;
+font-weight:500;
+cursor: pointer;
+transition: 0.5s ease;
+&:hover{
+  background: #333;
+  color: #fff;
+  transform: scale(1.2)
+}
+`

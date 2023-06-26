@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { BotonRedondo } from "../assets/styles/style";
+import { useSelector } from "react-redux";
 
 export const Pagination = ({
   totalPages,
@@ -11,44 +11,44 @@ export const Pagination = ({
   fastPrev,
   fastNext,
 }) => {
-  console.log(pages);
-  return (
-    <>
-      <Container>
-        {!totalPages ? (
-          <h3>Cargando Paginado..</h3>
-        ) : (
+  const pokemonSearchState = useSelector((state) => state.pokemons);
+  const searchLoading = useSelector((state) => state.searchLoading);
+  const error = useSelector((state) => state.error);
+
+  const renderPagination = () => {
+    if (searchLoading) {
+      return <h3>Buscando Pokemon ...</h3>;
+    }
+    if (pokemonSearchState.id) {
+      return <h3>Pokémon encontrado</h3>;
+    }
+
+    if (!totalPages) {
+      return <h3>Cargando Paginado...</h3>;
+    }
+
+    return (
+      <>
+        {pages > 1 && (
           <>
-            {pages > 1 && (
-              <>
-                <BotonRedondo onClick={fastPrev}>
-                  <AiOutlineLeft />
-                  <AiOutlineLeft />
-                </BotonRedondo>
-                <BotonRedondo onClick={onPrev}>
-                  <AiOutlineLeft />
-                </BotonRedondo>
-              </>
-            )}
-            <h3>
-              <span>{pages}</span> de <span>{totalPages}</span>
-            </h3>
-            {pages !== totalPages && (
-              <>
-                <BotonRedondo onClick={onNext}>
-                  <AiOutlineRight />
-                </BotonRedondo>
-                <BotonRedondo onClick={fastNext}>
-                  <AiOutlineRight />
-                  <AiOutlineRight />
-                </BotonRedondo>
-              </>
-            )}
+            <BotonRedondo onClick={fastPrev}>{"<<"}</BotonRedondo>
+            <BotonRedondo onClick={onPrev}>{"<"}</BotonRedondo>
           </>
         )}
-      </Container>
-    </>
-  );
+        <h3>
+          <span>{pages}</span> de <span>{totalPages}</span>
+        </h3>
+        {pages !== totalPages && (
+          <>
+            <BotonRedondo onClick={onNext}>{">"}</BotonRedondo>
+            <BotonRedondo onClick={fastNext}>{">>"}</BotonRedondo>
+          </>
+        )}
+      </>
+    );
+  };
+
+  return <Container>{error !== null ? null : renderPagination()}</Container>;
 };
 
 const Container = styled.div`

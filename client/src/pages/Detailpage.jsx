@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemon, updatePokemon, getPokemons } from "../redux/actions";
 import { Loader } from "../components/Loader";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { BTNGoBack } from "../assets/styles/style";
 
@@ -22,7 +21,7 @@ export const DetailPage = () => {
   useEffect(() => {
     dispatch(getPokemon(id));
     return () => dispatch(updatePokemon({}));
-  }, []);
+  }, [dispatch, id]);
 
   const renderLoader = () => (
     <ContainerLoader>
@@ -38,7 +37,7 @@ export const DetailPage = () => {
     <Container>
       <div className="btn_goback">
         <BTNGoBack onClick={() => handleClick()}>
-          <AiOutlineArrowLeft />
+          {"<"}
         </BTNGoBack>
       </div>
       <div className="pokemon_detail_page">
