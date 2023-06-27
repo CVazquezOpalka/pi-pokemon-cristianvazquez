@@ -53,7 +53,6 @@ const createPokemons = async (req, res) => {
         message: `El pokemon con el nombre ${name}, ya se encuentra en la base de datos`,
       });
     }
-    //sacar este error
     if (
       isNaN(vida) ||
       isNaN(fuerza) ||
@@ -81,7 +80,7 @@ const createPokemons = async (req, res) => {
       peso: Number(peso),
       createdDBB: true,
     });
-    if (!tipos.length) tipos = [19];
+    if (!tipos.length) tipos = [1];
     await newPokemon.setTipos(tipos);
     res.status(200).json(newPokemon);
   } catch (error) {
