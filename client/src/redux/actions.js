@@ -1,34 +1,35 @@
 import {
-  GET_POKEMONS_REQUEST,
   GET_POKEMONS,
   GET_POKEMON,
   GET_TYPES,
   FILTER_TYPES,
   SORT_ORDER,
-  UPDATE_POKEMONS,
   UPDATE_POKEMON,
   UPDATE_ORDER,
   UPDATE_TYPE,
   UPDATE_SEARCH,
+  UPDATE_ERROR,
   SEARCH_POKEMON_REQUEST,
   SEARCH_POKEMON_SUCCESS,
   SEARCH_POKEMON_FAILURE,
   CREATE_POKEMON_REQUEST,
   CREATE_POKEMON_ACEPTADO,
   CREATE_POKEMON_FALLO,
+  UPDATE_LOADING,
 } from "./actionTypes";
 
 //FUNCIONES DE LIMPIEZA
-
+export const updateLoading = (payload) => ({
+  type: UPDATE_LOADING,
+  payload,
+});
+export const updateError = (payload) => ({
+  type: UPDATE_ERROR,
+  payload,
+});
 export const updateSearch = (payload) => {
   return {
     type: UPDATE_SEARCH,
-    payload,
-  };
-};
-export const updatePokemons = (payload) => {
-  return {
-    type: UPDATE_POKEMONS,
     payload,
   };
 };
@@ -104,7 +105,8 @@ export const createPokemon = (pokemonData) => {
         );
       } else {
         alert("Pokémon creado con éxito");
-        dispatch(createPokemonAceptado()); // Solicitud exitosa
+        dispatch(createPokemonAceptado());
+        dispatch(getPokemons()); // Solicitud exitosa
       }
     } catch (error) {
       dispatch(createPokemonFallo(error)); // Error en la solicitud
@@ -126,10 +128,6 @@ export function getTypes() {
       );
   };
 }
-
-export const getPokemonsRequest = () => ({
-  type: GET_POKEMONS_REQUEST,
-});
 
 /* export function getPokemons() {
   return function (dispatch) {
@@ -170,7 +168,7 @@ export function getPokemon(id) {
       );
   };
 }
-export function getPokemonByName(name) {
+/* export function getPokemonByName(name) {
   return function (dispatch) {
     //esta funcion recibe un nombre como argumento y despacha 3 acciones,
     //pone el estado loading en true, error en null
@@ -200,16 +198,35 @@ export function getPokemonByName(name) {
         })
     );
   };
-}
+} */
 
-export function filterTypes(type) {
-  return function (dispatch) {
-    dispatch({
-      type: FILTER_TYPES,
-      payload: type,
-    });
-  };
-}
+export const getPokemonByName = (name) => async (dispatch) => {
+  const URL = `http://localhost:3001/pokemons?name=${name}`;
+  try {
+    dispatch(searchPokemonRequest());
+    const response = await fetch(URL);
+    if (!response.ok) {
+      let errorResponse;
+      try {
+        errorResponse = await response.json();
+      } catch (error) {
+        errorResponse = { message: "Algo salio Mal" };
+      }
+      throw errorResponse;
+    }
+    const pokemon = await response.json();
+    dispatch(searchPokemonSuccess(pokemon));
+  } catch (error) {
+    dispatch(searchPokemonFailure(error));
+  }
+};
+
+export const filterTypes = (type) => (dispatch) => {
+  dispatch({
+    type: FILTER_TYPES,
+    payload: type,
+  });
+};
 
 export function sortOrder(order) {
   return function (dispatch) {

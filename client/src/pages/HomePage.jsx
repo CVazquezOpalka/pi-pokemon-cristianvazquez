@@ -22,7 +22,7 @@ export const HomePage = () => {
   const type = useSelector((state) => state.type);
   const order = useSelector((state) => state.order);
 
-  //FILTROS
+  //helpers
   if (order) pokemonState = ordered(order, pokemonState);
   if (type) pokemonState = tipos(type, pokemonState);
 

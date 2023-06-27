@@ -1,8 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemon, updatePokemon, getPokemons } from "../redux/actions";
+import {
+  getPokemon,
+  updatePokemon,
+  getPokemons,
+  updateType,
+  updateOrder,
+} from "../redux/actions";
 import { Loader } from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 import { BTNGoBack } from "../assets/styles/style";
@@ -18,10 +24,16 @@ export const DetailPage = () => {
     navigate("/home");
   };
 
+  const cleanUp = useCallback(() => {
+    dispatch(updatePokemon({}));
+    dispatch(updateType(""));
+    dispatch(updateOrder(""));
+  }, [dispatch]);
+
   useEffect(() => {
     dispatch(getPokemon(id));
-    return () => dispatch(updatePokemon({}));
-  }, [dispatch, id]);
+    return cleanUp();
+  }, [dispatch, id, cleanUp]);
 
   const renderLoader = () => (
     <ContainerLoader>
@@ -36,9 +48,7 @@ export const DetailPage = () => {
   return (
     <Container>
       <div className="btn_goback">
-        <BTNGoBack onClick={() => handleClick()}>
-          {"<"}
-        </BTNGoBack>
+        <BTNGoBack onClick={() => handleClick()}>{"<"}</BTNGoBack>
       </div>
       <div className="pokemon_detail_page">
         <div className="page_top">

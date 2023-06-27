@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Card, Loader } from "./index";
 import { useDispatch, useSelector } from "react-redux";
 import { BTNGoBack } from "../assets/styles/style";
-import { getPokemons } from "../redux/actions";
+import { getPokemons, updateError, updateLoading } from "../redux/actions";
 
 export const CardContext = ({ pokePagination, state }) => {
   //logica de componente
@@ -14,6 +14,8 @@ export const CardContext = ({ pokePagination, state }) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
+    if (error !== null) dispatch(updateError(null));
+    dispatch(updateLoading(true));
     dispatch(getPokemons());
   };
   const renderLoader = () => (
@@ -22,37 +24,39 @@ export const CardContext = ({ pokePagination, state }) => {
       <Loader />
     </ContainerLoader>
   );
-
   const renderSearchContent = () => (
     <Container alter>
       <div className="btn_goback">
-        <BTNGoBack onClick={() => handleClick()}>{"<"}</BTNGoBack>
+        <BTNGoBack onClick={handleClick}>{"<"}</BTNGoBack>
       </div>
-      {error ? <h3>{error.message}</h3> : <Card pokemon={state} alter />}
+      {state.id ? <Card pokemon={state} alter /> : null}
     </Container>
   );
-
   const renderNormalContent = () => (
     <Container>
-      {loading ? (
-        <Loader />
-      ) : (
-        pokePagination.map((e) => <Card pokemon={e} key={e.id} />)
-      )}
+      {pokePagination.map((e) => (
+        <Card pokemon={e} key={e.id} />
+      ))}
     </Container>
   );
+  if (error) {
+    return (
+      <Container alter>
+        <div className="btn_goback">
+          <BTNGoBack onClick={handleClick}>{"<"}</BTNGoBack>
+        </div>
+        <h3>{error.message}</h3>
+      </Container>
+    );
+  }
 
-  return (
-    <>
-      {loading
-        ? renderLoader()
-        : searchLoading
-        ? renderLoader()
-        : state.id
-        ? renderSearchContent()
-        : renderNormalContent()}
-    </>
-  );
+  if (loading || searchLoading) {
+    return renderLoader();
+  }
+  if (state.id) {
+    return renderSearchContent();
+  }
+  return renderNormalContent();
 };
 
 const Container = styled.div`
