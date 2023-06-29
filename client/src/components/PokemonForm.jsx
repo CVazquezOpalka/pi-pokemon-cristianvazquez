@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { createPokemon } from "../redux/actions";
 import { Loader } from "./Loader";
 
-
 export const PokeForm = () => {
   //logica del componente
   const dispatch = useDispatch();
@@ -122,7 +121,6 @@ export const PokeForm = () => {
       tipos: [],
     });
     setSelectTipo1(null);
-   
   };
 
   const renderLoader = () => (
@@ -219,11 +217,13 @@ export const PokeForm = () => {
                       <option disabled selected value="default">
                         Tipo 1
                       </option>
-                      {option.map((e) => (
-                        <option key={e.id} value={e.id}>
-                          {e.name}
-                        </option>
-                      ))}
+                      {option
+                        .filter((e) => e.id !== 19)
+                        .map((e) => (
+                          <option key={e.id} value={e.id}>
+                            {e.name}
+                          </option>
+                        ))}
                     </select>
                   </label>
                   {errors.t ? <p className="danger_t">{errors.t}</p> : false}
@@ -250,7 +250,9 @@ export const PokeForm = () => {
                           Tipo 2
                         </option>
                         {option
-                          .filter((e) => e.id !== Number(selectTipo1))
+                          .filter(
+                            (e) => e.id !== Number(selectTipo1) && e.id !== 19
+                          )
                           .map(({ name, id }) => (
                             <option value={id} key={id}>
                               {name}
