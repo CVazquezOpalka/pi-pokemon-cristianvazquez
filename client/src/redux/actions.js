@@ -7,7 +7,6 @@ import {
   UPDATE_POKEMON,
   UPDATE_ORDER,
   UPDATE_TYPE,
-  UPDATE_SEARCH,
   UPDATE_ERROR,
   SEARCH_POKEMON_REQUEST,
   SEARCH_POKEMON_SUCCESS,
@@ -27,12 +26,7 @@ export const updateError = (payload) => ({
   type: UPDATE_ERROR,
   payload,
 });
-export const updateSearch = (payload) => {
-  return {
-    type: UPDATE_SEARCH,
-    payload,
-  };
-};
+
 export const updatePokemon = (payload) => {
   return {
     type: UPDATE_POKEMON,
@@ -168,6 +162,7 @@ export function getPokemon(id) {
       );
   };
 }
+
 /* export function getPokemonByName(name) {
   return function (dispatch) {
     //esta funcion recibe un nombre como argumento y despacha 3 acciones,

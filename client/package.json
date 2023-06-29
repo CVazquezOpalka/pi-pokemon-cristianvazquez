@@ -21,7 +21,7 @@
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build",
-    "test": "react-scripts test",
+    "test": "jest --detectOpenHandles",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -43,8 +43,18 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
     "@types/react-router-dom": "^5.3.3",
     "jest": "^26.6.0",
     "react-testing-library": "^8.0.1"
+  },
+  "jest": {
+    "babel": {
+      "presets": [
+        "@babel/preset-react",
+        "@babel/preset-env"
+      ]
+    }
   }
 }

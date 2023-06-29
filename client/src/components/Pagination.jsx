@@ -12,6 +12,7 @@ export const Pagination = ({
   fastNext,
 }) => {
   const pokemonSearchState = useSelector((state) => state.pokemons);
+  const loading = useSelector((state) => state.isLoading);
   const searchLoading = useSelector((state) => state.searchLoading);
   const error = useSelector((state) => state.error);
 
@@ -19,12 +20,15 @@ export const Pagination = ({
     if (searchLoading) {
       return <h3>Buscando Pokemon ...</h3>;
     }
+    if (loading) {
+      return <h3>Cargando Paginado...</h3>;
+    }
     if (pokemonSearchState.id) {
       return <h3>Pokémon encontrado</h3>;
     }
 
-    if (!totalPages) {
-      return <h3>Cargando Paginado...</h3>;
+    if (!totalPages || loading) {
+      return <h3>{error ? error : "Cargando Paginado..."}</h3>;
     }
 
     return (
