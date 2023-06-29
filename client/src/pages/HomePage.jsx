@@ -5,12 +5,7 @@ import { Pagination, FilterBar, CardContext } from "../components/index";
 //Hooks
 import { useSelector, useDispatch } from "react-redux";
 //actions
-import {
-  filterTypes,
-  updateOrder,
-  sortOrder,
-  updateType,
-} from "../redux/actions";
+import { updateOrder, sortOrder, updateType } from "../redux/actions";
 //helpers
 import { ordered, tipos } from "../assets/utils/utils.js";
 
@@ -30,28 +25,7 @@ export const HomePage = () => {
   //controla el toogle de la barra de filtros
   const [show, setShow] = useState(false);
   //controlador de filtros por tipo
-  const [types, setTypes] = useState({
-    normal: false,
-    flying: false,
-    ground: false,
-    bug: false,
-    steel: false,
-    water: false,
-    electric: false,
-    ice: false,
-    dark: false,
-    unknown: false,
-    fighting: false,
-    poison: false,
-    rock: false,
-    ghost: false,
-    fire: false,
-    grass: false,
-    psychic: false,
-    dragon: false,
-    fairy: false,
-    shadow: false,
-  });
+
   const [ordenar, setOrdenar] = useState({
     "a-z": false,
     "z-a": false,
@@ -60,18 +34,20 @@ export const HomePage = () => {
     createdBDD: false,
     api: false,
   });
+
+  const [selectedType, setSelectedType] = useState("unknown");
+
   // funciones de filtros
   const handleCheckbox = (e) => {
-    setTypes({
-      ...types,
-      [e.target.name]: e.target.checked,
-    });
-    if (e.target.checked) {
-      dispatch(filterTypes(e.target.name));
-      setPage(1);
-    } else {
+    const typeName = e.target.name;
+    if (typeName === "unknown") {
+      setSelectedType("unknown");
       dispatch(updateType(""));
+    } else {
+      setSelectedType(typeName);
+      dispatch(updateType(typeName));
     }
+    setPage(1);
   };
   const handleOrder = (e) => {
     setOrdenar({
@@ -151,11 +127,12 @@ export const HomePage = () => {
             {typeState?.map((e) => (
               <div className="checkbox" key={e.id}>
                 <input
-                  type="checkbox"
+                  type="radio"
                   value={e.name}
                   id={e.id}
                   name={e.name}
-                  onClick={handleCheckbox}
+                  checked={e.name === selectedType}
+                  onChange={handleCheckbox}
                 />
                 <label htmlFor={e.name}>{e.name}</label>
               </div>
