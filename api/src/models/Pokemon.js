@@ -36,9 +36,7 @@ module.exports = (sequelize) => {
       peso: {
         type: DataTypes.DECIMAL,
       },
-      image: {
-        type: DataTypes.STRING,
-      },
+      
       createdDBB: {
         type: DataTypes.BOOLEAN,
       },

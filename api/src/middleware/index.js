@@ -2,27 +2,7 @@ const axios = require("axios");
 const { Pokemon, Tipo } = require("../db.js");
 
 const info = async (name, id) => {
-  const pokesBDD = await Pokemon.findAll({
-    attributes: [
-      "id",
-      "name",
-      "image",
-      "vida",
-      "fuerza",
-      "defensa",
-      "velocidad",
-      "peso",
-      "altura",
-      "createdDBB",
-    ],
-    include: [
-      {
-        model: Tipo,
-        attributes: ["name"],
-        through: { attributes: [] },
-      },
-    ],
-  });
+  const pokesBDD = await Pokemon.findAll({ include: Tipo });
   const result = [];
   pokesBDD.forEach((e) => {
     result.push({
@@ -41,8 +21,13 @@ const info = async (name, id) => {
   });
   const URL = "https://pokeapi.co/api/v2/pokemon?limit=350";
   const { data } = await axios.get(URL);
+  //data{
+    //nombre
+    //url
+  //}
 
   let pokeArr = [];
+  //array de promose
   const urlArray = data.results.map(async (e) => {
     const { data } = await axios.get(e.url);
     return data;
